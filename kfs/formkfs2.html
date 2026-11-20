@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buat Surat KFS (Langkah 2) - Ruang Kontrak TELKOM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="d-flex w-100 no-print">
+    <!-- Sidebar -->
+    <aside class="sidebar text-white p-3 d-flex flex-column justify-content-between">
+      <div>
+        <div class="d-flex align-items-center gap-2 px-2 pb-4">
+          <div class="bg-white text-telkom rounded-3 d-flex align-items-center justify-content-center fw-bold" style="width:38px; height:38px;">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div>
+            <div class="fw-bold small">Ruang Kontrak</div>
+            <div style="font-size:11px; opacity:0.8;">TELKOM KFS Workspace</div>
+          </div>
+        </div>
+        <div class="px-2 pb-2 fw-bold" style="font-size:11px; opacity:0.85;">WORKSPACE</div>
+        <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+            <a href="../pelanggan/pelanggan.html" class="nav-link d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-people me-2"></i>Pelanggan</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navPelangganCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suratkfs.html" class="nav-link active d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-file-text me-2"></i>Surat KFS</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navSuratCount">0</span>
+            </a>
+          </li>
+        </ul>
+        <hr class="border-white border-opacity-25 my-3">
+      </div>
+
+      <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1);">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="bg-white text-telkom rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:34px; height:34px;" id="userAvatar"></div>
+          <div class="overflow-hidden">
+            <div class="fw-bold small text-truncate" id="userName"></div>
+            <div class="text-truncate" style="font-size:10px; opacity:0.8;" id="userEmail"></div>
+          </div>
+        </div>
+        <a href="../login.html" class="text-white-50 text-decoration-none small"><i class="bi bi-box-arrow-right me-1"></i>Keluar</a>
+      </div>
+    </aside>
+
+    <!-- Main Form -->
+    <main class="flex-grow-1 p-4 p-lg-5">
+      <div class="card border-0 bg-form-gray rounded-4 p-4 p-md-5 mx-auto" style="max-width: 780px;">
+        <form id="kfsStep2Form">
+
+          <!-- Account Manager -->
+          <div class="small fw-bold mb-3"><i class="bi bi-people me-2"></i>Account Manager</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="amNama">Nama</label>
+              <input type="text" id="amNama" class="form-control border-0 rounded-3" placeholder="Nama Account Manager">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="amJabatan">Jabatan</label>
+              <input type="text" id="amJabatan" class="form-control border-0 rounded-3" placeholder="Account Manager">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="amGsm">GSM</label>
+              <input type="text" id="amGsm" class="form-control border-0 rounded-3" placeholder="0812xxxxxxxx">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="amEmail">Email</label>
+              <input type="email" id="amEmail" class="form-control border-0 rounded-3" placeholder="email@telkom.co.id">
+            </div>
+          </div>
+
+          <!-- Payroll -->
+          <div class="small fw-bold mb-3"><i class="bi bi-people me-2"></i>Payroll</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="payrollNama">Nama</label>
+              <input type="text" id="payrollNama" class="form-control border-0 rounded-3" placeholder="Nama PIC Payroll">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="payrollJabatan">Jabatan</label>
+              <input type="text" id="payrollJabatan" class="form-control border-0 rounded-3" placeholder="Jabatan">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="payrollKantor">Kantor</label>
+              <input type="text" id="payrollKantor" class="form-control border-0 rounded-3" placeholder="(0333) xxxxxx">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="payrollFax">Fax</label>
+              <input type="text" id="payrollFax" class="form-control border-0 rounded-3" placeholder="-">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="payrollEmail">Email</label>
+              <input type="email" id="payrollEmail" class="form-control border-0 rounded-3" placeholder="email@telkom.co.id">
+            </div>
+          </div>
+
+          <!-- Data Pelanggan A -->
+          <div class="small fw-bold mb-3">Data Pelanggan A</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelANama">Nama</label>
+              <input type="text" id="pelANama" class="form-control border-0 rounded-3" placeholder="Nama PIC Pelanggan A">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelAJabatan">Jabatan</label>
+              <input type="text" id="pelAJabatan" class="form-control border-0 rounded-3" placeholder="Jabatan">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelAGsm">GSM</label>
+              <input type="text" id="pelAGsm" class="form-control border-0 rounded-3" placeholder="08xxxxxxxxxx">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelAEmail">Email</label>
+              <input type="email" id="pelAEmail" class="form-control border-0 rounded-3" placeholder="pic1@perusahaan.com">
+            </div>
+          </div>
+
+          <!-- Data Pelanggan B -->
+          <div class="small fw-bold mb-3">Data Pelanggan B</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelBNama">Nama</label>
+              <input type="text" id="pelBNama" class="form-control border-0 rounded-3" placeholder="Nama PIC Pelanggan B">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelBJabatan">Jabatan</label>
+              <input type="text" id="pelBJabatan" class="form-control border-0 rounded-3" placeholder="Jabatan">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelBGsm">GSM</label>
+              <input type="text" id="pelBGsm" class="form-control border-0 rounded-3" placeholder="08xxxxxxxxxx">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold" for="pelBEmail">Email</label>
+              <input type="email" id="pelBEmail" class="form-control border-0 rounded-3" placeholder="pic2@perusahaan.com">
+            </div>
+          </div>
+
+          <!-- Tanggal Surat (Full Width) -->
+          <div class="row g-3 mb-4">
+            <div class="col-12">
+              <label class="form-label small fw-bold" for="tanggalSurat">Tanggal Surat</label>
+              <input type="date" id="tanggalSurat" class="form-control border-0 rounded-3 py-2" required>
+            </div>
+          </div>
+
+          <!-- Tombol Navigasi -->
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="formkfs.html" class="btn btn-light px-4 py-2 rounded-3 fw-semibold"><i class="bi bi-arrow-left me-1"></i>Back</a>
+            <button type="submit" class="btn btn-telkom px-4 py-2 rounded-3 fw-semibold"><i class="bi bi-download me-1"></i>Simpan & Unduh PDF</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Area Cetak PDF -->
+  <div id="print-document"></div>
+
+  <script src="pdf-template.js"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('kfs_user'));
+    if (!user) {
+      window.location.href = '../login.html';
+    } else {
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    const pelangganList = JSON.parse(localStorage.getItem('kfs_pelanggan')) || [];
+    const suratList = JSON.parse(localStorage.getItem('kfs_surat')) || [];
+    document.getElementById('navPelangganCount').textContent = pelangganList.length;
+    document.getElementById('navSuratCount').textContent = suratList.length;
+
+    const step1Data = JSON.parse(sessionStorage.getItem('kfs_step1_draft'));
+    if (!step1Data) {
+      alert('Data langkah pertama tidak ditemukan. Silakan isi data kontrak terlebih dahulu.');
+      window.location.href = 'formkfs.html';
+    }
+
+    const fields = [
+      'amNama', 'amJabatan', 'amGsm', 'amEmail',
+      'payrollNama', 'payrollJabatan', 'payrollKantor', 'payrollFax', 'payrollEmail',
+      'pelANama', 'pelAJabatan', 'pelAGsm', 'pelAEmail',
+      'pelBNama', 'pelBJabatan', 'pelBGsm', 'pelBEmail',
+      'tanggalSurat'
+    ];
+
+    const step2Draft = JSON.parse(sessionStorage.getItem('kfs_step2_draft')) || {};
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    document.getElementById('tanggalSurat').value = today.toISOString().slice(0, 10);
+
+    fields.forEach((id) => {
+      const field = document.getElementById(id);
+      if (step2Draft[id] !== undefined) {
+        field.value = step2Draft[id];
+      }
+    });
+
+    const form = document.getElementById('kfsStep2Form');
+    form.addEventListener('input', function() {
+      const draft = {};
+      fields.forEach((id) => {
+        draft[id] = document.getElementById(id).value;
+      });
+      sessionStorage.setItem('kfs_step2_draft', JSON.stringify(draft));
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!step1Data) return;
+
+      const fullSuratData = {
+        ...step1Data,
+        wakilTelkom: {
+          nama: document.getElementById('amNama').value || user.name,
+          jabatan: document.getElementById('amJabatan').value || 'Account Manager',
+          unit: 'Telda Banyuwangi - Witel Jatim Timur'
+        },
+        am: {
+          nama: document.getElementById('amNama').value,
+          jabatan: document.getElementById('amJabatan').value,
+          gsm: document.getElementById('amGsm').value,
+          email: document.getElementById('amEmail').value
+        },
+        payroll: {
+          nama: document.getElementById('payrollNama').value,
+          jabatan: document.getElementById('payrollJabatan').value,
+          kantor: document.getElementById('payrollKantor').value,
+          fax: document.getElementById('payrollFax').value,
+          email: document.getElementById('payrollEmail').value
+        },
+        pelA: {
+          nama: document.getElementById('pelANama').value,
+          jabatan: document.getElementById('pelAJabatan').value,
+          gsm: document.getElementById('pelAGsm').value,
+          email: document.getElementById('pelAEmail').value
+        },
+        pelB: {
+          nama: document.getElementById('pelBNama').value,
+          jabatan: document.getElementById('pelBJabatan').value,
+          gsm: document.getElementById('pelBGsm').value,
+          email: document.getElementById('pelBEmail').value
+        },
+        kotaSurat: 'Banyuwangi',
+        tanggalSurat: document.getElementById('tanggalSurat').value
+      };
+
+      suratList.unshift(fullSuratData);
+      localStorage.setItem('kfs_surat', JSON.stringify(suratList));
+      sessionStorage.removeItem('kfs_step1_draft');
+      sessionStorage.removeItem('kfs_step2_draft');
+
+      document.getElementById('print-document').innerHTML = generateKFSHTML(fullSuratData);
+      window.print();
+      window.location.href = 'suratkfs.html';
+    });
+  </script>
+</body>
+</html>

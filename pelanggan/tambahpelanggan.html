@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Pelanggan - Ruang Kontrak TELKOM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="d-flex w-100">
+    <!-- Sidebar -->
+    <aside class="sidebar text-white p-3 d-flex flex-column justify-content-between">
+      <div>
+        <div class="d-flex align-items-center gap-2 px-2 pb-4">
+          <div class="bg-white text-telkom rounded-3 d-flex align-items-center justify-content-center fw-bold" style="width:38px; height:38px;">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div>
+            <div class="fw-bold small">Ruang Kontrak</div>
+            <div style="font-size:11px; opacity:0.8;">TELKOM KFS Workspace</div>
+          </div>
+        </div>
+        <div class="px-2 pb-2 fw-bold" style="font-size:11px; opacity:0.85;">WORKSPACE</div>
+        <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+            <a href="pelanggan.html" class="nav-link active d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-people me-2"></i>Pelanggan</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navPelangganCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../kfs/suratkfs.html" class="nav-link d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-file-text me-2"></i>Surat KFS</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navSuratCount">0</span>
+            </a>
+          </li>
+        </ul>
+        <hr class="border-white border-opacity-25 my-3">
+      </div>
+      <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1);">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="bg-white text-telkom rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:34px; height:34px;" id="userAvatar"></div>
+          <div class="overflow-hidden">
+            <div class="fw-bold small text-truncate" id="userName"></div>
+            <div class="text-truncate" style="font-size:10px; opacity:0.8;" id="userEmail"></div>
+          </div>
+        </div>
+        <a href="../login.html" class="text-white-50 text-decoration-none small"><i class="bi bi-box-arrow-right me-1"></i>Keluar</a>
+      </div>
+    </aside>
+
+    <!-- Main Form -->
+    <main class="flex-grow-1 p-4 p-lg-5">
+      <div class="card border-0 bg-form-gray rounded-4 p-4 p-md-5 mx-auto" style="max-width: 780px;">
+        <h6 class="fw-bold mb-1">Tambah Pelanggan</h6>
+        <p class="small fw-semibold mb-4">Simpan identitas perusahaan untuk digunakan pada surat KFS.</p>
+
+        <form id="formPelanggan">
+          <div class="small fw-bold mb-3"><i class="bi bi-folder me-1"></i>Identitas Perusahaan / Institusi</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nama Perusahaan / Institusi *</label>
+              <input type="text" id="perusahaan" class="form-control border-0 rounded-3" placeholder="Contoh : PT Wijaya Pratama" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nomor Id Pelanggan *</label>
+              <input type="text" id="idPelanggan" class="form-control border-0 rounded-3 hanya-angka" inputmode="numeric" placeholder="Contoh : 12345678" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nama Pelanggan</label>
+              <input type="text" id="namaPelanggan" class="form-control border-0 rounded-3" placeholder="Nama Lengkap">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">NPWP</label>
+              <input type="text" id="npwp" class="form-control border-0 rounded-3 hanya-angka" inputmode="numeric" maxlength="16" placeholder="Contoh : 0123456789012345">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Alamat *</label>
+              <textarea id="alamat" class="form-control border-0 rounded-3" rows="2" placeholder="Alamat Pelanggan" required></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Kode Pos</label>
+              <input type="text" id="kodePos" class="form-control border-0 rounded-3 hanya-angka" inputmode="numeric" maxlength="5" placeholder="68416">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Email *</label>
+              <input type="email" id="email" class="form-control border-0 rounded-3" placeholder="namaperusahaan@gmail.com" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nomor Telepon *</label>
+              <input type="text" id="telepon" class="form-control border-0 rounded-3 hanya-angka" inputmode="numeric" maxlength="15" placeholder="Contoh : 081234567890" required>
+            </div>
+          </div>
+
+          <div class="small fw-bold mb-3"><i class="bi bi-people me-1"></i>Wakil Pelanggan</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nama Wakil Yang Sah *</label>
+              <input type="text" id="wakilNama" class="form-control border-0 rounded-3" placeholder="Nama Sesuai Dokumen Yang Kuasa" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Jabatan *</label>
+              <input type="text" id="wakilJabatan" class="form-control border-0 rounded-3" placeholder="Direktur / Kepala" required>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <a href="pelanggan.html" class="btn btn-light px-4 rounded-3 fw-semibold">Batal</a>
+            <button type="submit" class="btn btn-telkom px-4 rounded-3 fw-semibold">+ Simpan Pelanggan</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('kfs_user'));
+    if (!user) {
+      window.location.href = '../login.html';
+    } else {
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    // Filter otomatis agar input dengan class .hanya-angka hanya bisa diisi angka 0-9
+    document.querySelectorAll('.hanya-angka').forEach(input => {
+      input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+    });
+
+    const pelangganList = JSON.parse(localStorage.getItem('kfs_pelanggan')) || [];
+    const suratList = JSON.parse(localStorage.getItem('kfs_surat')) || [];
+    document.getElementById('navPelangganCount').textContent = pelangganList.length;
+    document.getElementById('navSuratCount').textContent = suratList.length;
+
+    document.getElementById('formPelanggan').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const today = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+      pelangganList.push({
+        perusahaan: document.getElementById('perusahaan').value.trim(),
+        idPelanggan: document.getElementById('idPelanggan').value.trim(),
+        namaPelanggan: document.getElementById('namaPelanggan').value.trim(),
+        npwp: document.getElementById('npwp').value.trim(),
+        alamat: document.getElementById('alamat').value.trim(),
+        kodePos: document.getElementById('kodePos').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        telepon: document.getElementById('telepon').value.trim(),
+        wakilNama: document.getElementById('wakilNama').value.trim(),
+        wakilJabatan: document.getElementById('wakilJabatan').value.trim(),
+        tanggal: today
+      });
+      localStorage.setItem('kfs_pelanggan', JSON.stringify(pelangganList));
+      window.location.href = 'pelanggan.html';
+    });
+  </script>
+</body>
+</html>
