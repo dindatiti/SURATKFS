@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Output Surat PDF - Ruang Kontrak TELKOM</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div class="d-flex w-100 no-print">
+    <!-- Sidebar -->
+    <aside class="sidebar text-white p-3 d-flex flex-column justify-content-between">
+      <div>
+        <div class="d-flex align-items-center gap-2 px-2 pb-4">
+          <div class="bg-white text-telkom rounded-3 d-flex align-items-center justify-content-center fw-bold" style="width:38px; height:38px;">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div>
+            <div class="fw-bold small">Ruang Kontrak</div>
+            <div style="font-size:11px; opacity:0.8;">TELKOM KFS Workspace</div>
+          </div>
+        </div>
+
+        <div class="px-2 pb-2 fw-bold" style="font-size:11px; opacity:0.85;">WORKSPACE</div>
+        <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+            <a href="../pelanggan/pelanggan.html" class="nav-link d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-people me-2"></i>Pelanggan</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navPelangganCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="suratkfs.html" class="nav-link active d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-file-text me-2"></i>Surat KFS</span>
+              <span class="badge rounded-pill bg-white bg-opacity-25" id="navSuratCount">0</span>
+            </a>
+          </li>
+        </ul>
+        <hr class="border-white border-opacity-25 my-3">
+      </div>
+
+      <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1);">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="bg-white text-telkom rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:34px; height:34px;" id="userAvatar"></div>
+          <div class="overflow-hidden">
+            <div class="fw-bold small text-truncate" id="userName"></div>
+            <div class="text-truncate" style="font-size:10px; opacity:0.8;" id="userEmail"></div>
+          </div>
+        </div>
+        <a href="../login.html" class="text-white-50 text-decoration-none small"><i class="bi bi-box-arrow-right me-1"></i>Keluar</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 p-4 d-flex flex-column" style="background:#f3f4f6;">
+      <!-- Top Action Bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <a href="suratkfs.html" class="btn btn-sm btn-outline-secondary rounded-3 fw-semibold">
+            <i class="bi bi-arrow-left me-1"></i>Kembali
+          </a>
+          <span class="small fw-bold text-dark" id="headerDocInfo">Pratinjau Dokumen Amandemen KFS</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" id="btnPrintBrowser" class="btn btn-sm btn-outline-dark fw-semibold px-3 py-2 rounded-3" onclick="cetakViaBrowser()">
+            <i class="bi bi-printer me-1"></i>Print Dialog
+          </button>
+          <button type="button" id="btnCetakPDF" class="btn btn-sm btn-telkom fw-bold px-4 py-2 rounded-3 shadow-sm" onclick="unduhPDFOtomatis()">
+            <i class="bi bi-file-earmark-pdf-fill me-1"></i>CETAK PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Canvas Area -->
+      <div class="flex-grow-1 rounded-4 p-4 position-relative" style="background:#d1d5db; overflow-y:auto; max-height:calc(100vh - 110px);">
+        <!-- Floating Zoom & Download Controls -->
+        <div class="position-sticky top-0 z-3 d-flex justify-content-center mb-3">
+          <div class="bg-telkom text-white rounded-pill px-3 py-2 shadow d-flex align-items-center gap-3">
+            <button type="button" class="btn btn-sm text-white p-0" title="Perbesar" onclick="ubahZoom(0.1)"><i class="bi bi-plus-lg"></i></button>
+            <button type="button" class="btn btn-sm text-white p-0" title="Reset Zoom" onclick="resetZoom()"><i class="bi bi-fullscreen"></i></button>
+            <button type="button" class="btn btn-sm text-white p-0" title="Perkecil" onclick="ubahZoom(-0.1)"><i class="bi bi-dash-lg"></i></button>
+            <span class="text-white-50">|</span>
+            <button type="button" class="btn btn-sm text-white p-0 fw-semibold" title="Unduh PDF" onclick="unduhPDFOtomatis()">
+              <i class="bi bi-download me-1"></i>Unduh PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Dokumen KFS yang dirender -->
+        <div id="previewZoomContainer" style="transform-origin: top center; transition: transform 0.2s ease;">
+          <div id="documentPreviewArea"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Area khusus cetak browser -->
+  <div id="print-document"></div>
+
+  <script src="pdf-template.js?v=9"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem('kfs_user'));
+    if (!user) {
+      window.location.href = '../login.html';
+    } else {
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    const pelangganList = JSON.parse(localStorage.getItem('kfs_pelanggan')) || [];
+    const suratList = JSON.parse(localStorage.getItem('kfs_surat')) || [];
+    document.getElementById('navPelangganCount').textContent = pelangganList.length;
+    document.getElementById('navSuratCount').textContent = suratList.length;
+
+    function ambilDataGabunganKFS() {
+      const params = new URLSearchParams(window.location.search);
+      const idxParam = params.get('idx');
+
+      const step1Draft = JSON.parse(sessionStorage.getItem('kfs_step1_draft')) || null;
+      const step2Draft = JSON.parse(sessionStorage.getItem('kfs_step2_draft')) || null;
+
+      let savedRecord = null;
+      if (idxParam !== null && suratList[Number(idxParam)]) {
+        savedRecord = suratList[Number(idxParam)];
+      } else if (suratList.length > 0) {
+        savedRecord = suratList[0];
+      }
+
+      if (!savedRecord && !step1Draft) {
+        return null;
+      }
+
+      const base = Object.assign({}, savedRecord || {}, step1Draft || {});
+      if (step2Draft) {
+        base.wakilTelkom = {
+          nama: step2Draft.amNama || (base.wakilTelkom && base.wakilTelkom.nama) || (user && user.name) || '',
+          jabatan: step2Draft.amJabatan || (base.wakilTelkom && base.wakilTelkom.jabatan) || '',
+          unit: (base.wakilTelkom && base.wakilTelkom.unit) || 'Telda Banyuwangi - Witel Jatim Timur'
+        };
+        base.am = Object.assign({}, base.am || {}, {
+          nama: step2Draft.amNama || (base.am && base.am.nama) || '',
+          jabatan: step2Draft.amJabatan || (base.am && base.am.jabatan) || '',
+          gsm: step2Draft.amGsm || (base.am && base.am.gsm) || '',
+          email: step2Draft.amEmail || (base.am && base.am.email) || ''
+        });
+        base.payroll = Object.assign({}, base.payroll || {}, {
+          nama: step2Draft.payrollNama || (base.payroll && base.payroll.nama) || '',
+          jabatan: step2Draft.payrollJabatan || (base.payroll && base.payroll.jabatan) || '',
+          kantor: step2Draft.payrollKantor || (base.payroll && base.payroll.kantor) || '',
+          fax: step2Draft.payrollFax || (base.payroll && base.payroll.fax) || '',
+          email: step2Draft.payrollEmail || (base.payroll && base.payroll.email) || ''
+        });
+        base.pelA = Object.assign({}, base.pelA || {}, {
+          nama: step2Draft.pelANama || (base.pelA && base.pelA.nama) || '',
+          jabatan: step2Draft.pelAJabatan || (base.pelA && base.pelA.jabatan) || '',
+          gsm: step2Draft.pelAGsm || (base.pelA && base.pelA.gsm) || '',
+          kantor: (base.pelanggan && base.pelanggan.telepon) || (base.pelA && base.pelA.kantor) || '',
+          fax: (base.pelA && base.pelA.fax) || '',
+          email: step2Draft.pelAEmail || (base.pelA && base.pelA.email) || ''
+        });
+        base.pelB = Object.assign({}, base.pelB || {}, {
+          nama: step2Draft.pelBNama || (base.pelB && base.pelB.nama) || '',
+          jabatan: step2Draft.pelBJabatan || (base.pelB && base.pelB.jabatan) || '',
+          gsm: step2Draft.pelBGsm || (base.pelB && base.pelB.gsm) || '',
+          kantor: (base.pelB && base.pelB.kantor) || '',
+          fax: (base.pelB && base.pelB.fax) || '',
+          email: step2Draft.pelBEmail || (base.pelB && base.pelB.email) || ''
+        });
+        if (step2Draft.tanggalSurat) {
+          base.tanggalSurat = step2Draft.tanggalSurat;
+        }
+      }
+
+      base.pelanggan = Object.assign(
+        {},
+        (savedRecord && savedRecord.pelanggan) || {},
+        (step1Draft && step1Draft.pelanggan) || {}
+      );
+
+      return base;
+    }
+
+    const dataKFS = ambilDataGabunganKFS();
+
+    if (!dataKFS || !dataKFS.pelanggan) {
+      document.getElementById('documentPreviewArea').innerHTML = `
+        <div class="alert alert-warning text-center my-5 mx-auto" style="max-width:500px;">
+          <h6 class="fw-bold">Data Kontrak KFS Tidak Ditemukan</h6>
+          <p class="small mb-3">Silakan isi Form KFS dan Form KFS 2 terlebih dahulu.</p>
+          <a href="formkfs.html" class="btn btn-sm btn-telkom">Isi Form KFS</a>
+        </div>
+      `;
+    } else {
+      const namaPerusahaan = dataKFS.pelanggan.perusahaan || 'Pelanggan';
+      document.getElementById('headerDocInfo').textContent = `${dataKFS.nomorKontrak || 'Amandemen KFS'} — ${namaPerusahaan}`;
+      document.getElementById('documentPreviewArea').innerHTML = generateKFSHTML(dataKFS, false);
+    }
+
+    let currentZoom = 1;
+    function ubahZoom(delta) {
+      currentZoom = Math.min(1.4, Math.max(0.6, Number((currentZoom + delta).toFixed(2))));
+      document.getElementById('previewZoomContainer').style.transform = `scale(${currentZoom})`;
+    }
+    function resetZoom() {
+      currentZoom = 1;
+      document.getElementById('previewZoomContainer').style.transform = 'scale(1)';
+    }
+
+    async function unduhPDFOtomatis() {
+      if (!dataKFS || !dataKFS.pelanggan) {
+        alert('Data Form KFS dan Form KFS 2 belum tersedia.');
+        return;
+      }
+
+      const btn = document.getElementById('btnCetakPDF');
+      const teksAsli = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Menyiapkan PDF...';
+
+      let tempHost = null;
+      try {
+        const rawNama = (dataKFS.pelanggan.perusahaan || 'Pelanggan').trim();
+        const safeNama = rawNama.replace(/[^a-zA-Z0-9\s_-]/g, '').replace(/\s+/g, '_');
+        const namaFilePDF = `Amandemen_KFS_${safeNama}.pdf`;
+
+        tempHost = document.createElement('div');
+        tempHost.style.position = 'fixed';
+        tempHost.style.left = '0';
+        tempHost.style.top = '0';
+        tempHost.style.width = '210mm';
+        tempHost.style.background = '#ffffff';
+        tempHost.style.zIndex = '99999';
+        tempHost.style.opacity = '0.01';
+        tempHost.style.pointerEvents = 'none';
+        tempHost.innerHTML = generateKFSHTML(dataKFS, true);
+        document.body.appendChild(tempHost);
+
+        await new Promise(resolve => setTimeout(resolve, 250));
+
+        const opsiPDF = {
+          margin: 0,
+          filename: namaFilePDF,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            letterRendering: true,
+            scrollX: 0,
+            scrollY: 0,
+            x: 0,
+            y: 0
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          },
+          pagebreak: {
+            mode: ['css', 'legacy'],
+            after: '.kfs-page-break'
+          }
+        };
+
+        await html2pdf().set(opsiPDF).from(tempHost).save();
+      } catch (err) {
+        console.error('Gagal membuat PDF otomatis:', err);
+        alert('Terjadi kendala saat membuat file PDF otomatis. Membuka dialog cetak browser sebagai alternatif.');
+        cetakViaBrowser();
+      } finally {
+        if (tempHost && tempHost.parentNode) {
+          tempHost.parentNode.removeChild(tempHost);
+        }
+        btn.disabled = false;
+        btn.innerHTML = teksAsli;
+      }
+    }
+
+    function cetakViaBrowser() {
+      if (!dataKFS) return;
+      document.getElementById('print-document').innerHTML = generateKFSHTML(dataKFS, true);
+      window.print();
+    }
+  </script>
+</body>
+</html>

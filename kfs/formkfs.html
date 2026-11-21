@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buat Surat KFS (Langkah 1) - Ruang Kontrak TELKOM</title>
+  <title>Buat Surat KFS - Ruang Kontrak TELKOM</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
@@ -22,7 +22,7 @@
             <div style="font-size:11px; opacity:0.8;">TELKOM KFS Workspace</div>
           </div>
         </div>
-        <div class="px-2 pb-2 fw-bold" style="font-size:11px; opacity:0.85;">WORKSPACE</div>
+        <div class="px-2 pb-2 fw-bold" style="font-size:11px; opacity:0.85;">WORKSPCACE</div>
         <ul class="nav flex-column gap-1">
           <li class="nav-item">
             <a href="../pelanggan/pelanggan.html" class="nav-link d-flex justify-content-between align-items-center">
@@ -58,12 +58,14 @@
         <p class="small fw-semibold mb-3">Lengkapi detail pihak dan layanan dari template kontrak.</p>
 
         <form id="kfsStep1Form">
+          <!-- Pilih Pelanggan -->
           <div class="bg-white rounded-3 p-3 mb-4">
             <label class="form-label small fw-bold">Pilih Pelanggan *</label>
             <select id="pilihPelanggan" class="form-select border-0 bg-card-gray fw-bold small" required></select>
-            <div class="small fw-semibold mt-2" style="font-size:11px;">Data identitas dan wakil akan diambil dari profil pelanggan.</div>
+            <div class="small fw-semibold mt-2" style="font-size:11px;">Data identitas dan wakil akandiambil dari profil pelanggan.</div>
           </div>
 
+          <!-- Informasi Kontrak -->
           <div class="d-flex justify-content-between align-items-center mb-3">
             <span class="small fw-bold"><i class="bi bi-folder me-1"></i>Informasi Kontrak</span>
             <a href="../pelanggan/tambahpelanggan.html" class="small fw-bold text-dark text-decoration-none">+ Pelanggan Baru</a>
@@ -71,44 +73,38 @@
 
           <div class="row g-3 mb-4">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Nomor Kontrak *</label>
-              <input type="text" id="nomorKontrak" class="form-control border-0 rounded-3" placeholder="K.TEL..../HK.810/........-...../2026" required>
+              <label class="form-label small fw-bold">Nomor Kontrak</label>
+              <input type="text" id="nomorKontrak" class="form-control border-0 rounded-3" placeholder="Contoh : K.TEL/..../HK.810/..../../...." required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Nomor Amandemen</label>
-              <input type="text" id="nomorAmandemen" class="form-control border-0 rounded-3" placeholder="Contoh : 001/AMD/2026">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Tanggal Kontrak *</label>
+              <label class="form-label small fw-bold">Tanggal Kontrak</label>
               <input type="date" id="tanggalKontrak" class="form-control border-0 rounded-3" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Tingkat Availability (%)</label>
-              <input type="text" id="availability" class="form-control border-0 rounded-3" value="99.5">
-            </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Jenis Layanan *</label>
+              <label class="form-label small fw-bold">Jenis Layanan</label>
               <select id="jenisLayanan" class="form-select border-0 rounded-3">
                 <option value="Layanan Connectivity TELKOM">Connectivity TELKOM</option>
                 <option value="Layanan Non-Connectivity TELKOM">Non-Connectivity TELKOM</option>
-                <option value="Bundling Layanan Connectivity TELKOM & Solusi">Bundling Layanan Connectivity TELKOM & Solusi</option>
+                <option value="Bundling Layanan Connectivity TELKOM & Solusi">Bundling Layanan Connectivity TELKOM &amp; Solusi</option>
               </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Tinggal Availability</label>
+              <input type="text" id="availability" class="form-control border-0 rounded-3" value="99.5">
             </div>
           </div>
 
+          <!-- Rincian Layanan -->
           <div class="small fw-bold mb-3"><i class="bi bi-wifi me-1"></i>Rincian Layanan</div>
           <div class="row g-3 mb-4">
-            <!-- Baris 1 -->
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Nama Layanan *</label>
+              <label class="form-label small fw-bold">Nama Layanan*</label>
               <input type="text" id="namaLayanan" class="form-control border-0 rounded-3" placeholder="Contoh : Astinet" required>
             </div>
             <div class="col-md-6">
               <label class="form-label small fw-bold">Paket</label>
               <input type="text" id="paket" class="form-control border-0 rounded-3" placeholder="Nama Paket Layanan">
             </div>
-
-            <!-- Baris 2 -->
             <div class="col-md-6">
               <label class="form-label small fw-bold">Lokasi Layanan</label>
               <input type="text" id="lokasi" class="form-control border-0 rounded-3" placeholder="Kota / Lokasi">
@@ -117,43 +113,42 @@
               <label class="form-label small fw-bold">Alamat Instalasi</label>
               <input type="text" id="alamatInstalasi" class="form-control border-0 rounded-3" placeholder="Alamat Lengkap Instalasi">
             </div>
-
-            <!-- Baris 3 -->
             <div class="col-md-6">
               <label class="form-label small fw-bold">Lebar Pita (Kbps)</label>
               <input type="number" id="lebarPita" class="form-control border-0 rounded-3" value="10000">
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Biaya Instalasi (Rp)</label>
-              <input type="number" id="biayaInstalasi" class="form-control border-0 rounded-3" value="0">
+              <label class="form-label small fw-bold">Biaya Instalasi(Rp)</label>
+              <input type="number" id="biayaInstalasi" class="form-control border-0 rounded-3" min="0" value="0">
             </div>
-
-            <!-- Baris 4: Biaya Bulanan berdiri sendiri di bawah Lebar Pita -->
             <div class="col-md-6">
               <label class="form-label small fw-bold">Biaya Bulanan (Rp)</label>
-              <input type="number" id="biayaBulanan" class="form-control border-0 rounded-3" value="0">
-            </div>
-            <div class="col-md-6 d-none d-md-block"></div>
-
-            <!-- Baris 5: Masa Berlaku -->
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Masa Berlaku Dari</label>
-              <input type="date" id="berlakuDari" class="form-control border-0 rounded-3">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Masa Berlaku Sampai</label>
-              <input type="date" id="berlakuSampai" class="form-control border-0 rounded-3">
+              <input type="number" id="biayaBulanan" class="form-control border-0 rounded-3" min="0" value="0">
             </div>
 
-            <!-- Baris 6: Jangka Waktu di bawah Masa Berlaku -->
+            <!-- Masa Berlaku (Sejajar Dari & Sampai) -->
+            <div class="col-12 mt-3">
+              <label class="form-label small fw-bold mb-1">Masa Berlaku</label>
+              <div class="row g-2 align-items-center">
+                <div class="col-md-6 d-flex align-items-center gap-2">
+                  <label for="berlakuDari" class="small fw-bold mb-0" style="min-width: 34px;">Dari</label>
+                  <input type="date" id="berlakuDari" class="form-control border-0 rounded-3" required>
+                </div>
+                <div class="col-md-6 d-flex align-items-center gap-2">
+                  <label for="berlakuSampai" class="small fw-bold mb-0" style="min-width: 50px;">Sampai</label>
+                  <input type="date" id="berlakuSampai" class="form-control border-0 rounded-3" required>
+                </div>
+              </div>
+            </div>
+
             <div class="col-12">
               <label class="form-label small fw-bold">Jangka Waktu</label>
-              <input type="text" id="jangkaWaktu" class="form-control border-0 rounded-3" placeholder="Contoh : 12 Bulan">
+              <input type="text" id="jangkaWaktu" class="form-control border-0 rounded-3" placeholder="Contoh : 1 Bulan" required>
             </div>
           </div>
 
           <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-telkom px-4 rounded-3 fw-semibold">Next →</button>
+            <button type="submit" class="btn btn-telkom px-4 py-2 rounded-3 fw-semibold">Next →</button>
           </div>
         </form>
       </div>
@@ -180,7 +175,7 @@
       selectPelanggan.innerHTML = `<option value="">-- Belum ada pelanggan (Tambah pelanggan dulu) --</option>`;
     } else {
       selectPelanggan.innerHTML = pelangganList.map((p, idx) =>
-        `<option value="${idx}">${p.perusahaan} (${p.idPelanggan})</option>`
+        `<option value="${idx}">${p.perusahaan.toUpperCase()}</option>`
       ).join('');
       const params = new URLSearchParams(window.location.search);
       if (params.has('pelangganIdx')) {
@@ -188,21 +183,21 @@
       }
     }
 
+    // Muat draft jika user kembali dari Langkah 2
     const draft = JSON.parse(sessionStorage.getItem('kfs_step1_draft'));
     if (draft) {
       selectPelanggan.value = draft.pelIdx;
       document.getElementById('nomorKontrak').value = draft.nomorKontrak || '';
-      document.getElementById('nomorAmandemen').value = draft.nomorAmandemen || '';
       document.getElementById('tanggalKontrak').value = draft.tanggalKontrak || '';
-      document.getElementById('availability').value = draft.availability || '99.5';
       document.getElementById('jenisLayanan').value = draft.jenisLayanan || 'Layanan Connectivity TELKOM';
+      document.getElementById('availability').value = draft.availability || '99.5';
       document.getElementById('namaLayanan').value = draft.namaLayanan || '';
       document.getElementById('paket').value = draft.paket || '';
       document.getElementById('lokasi').value = draft.lokasi || '';
       document.getElementById('alamatInstalasi').value = draft.alamatInstalasi || '';
-      document.getElementById('lebarPita').value = draft.lebarPita || 10000;
-      document.getElementById('biayaInstalasi').value = draft.biayaInstalasi || 0;
-      document.getElementById('biayaBulanan').value = draft.biayaBulanan || 0;
+      document.getElementById('lebarPita').value = draft.lebarPita !== undefined ? draft.lebarPita : 10000;
+      document.getElementById('biayaInstalasi').value = draft.biayaInstalasi !== undefined ? draft.biayaInstalasi : 0;
+      document.getElementById('biayaBulanan').value = draft.biayaBulanan !== undefined ? draft.biayaBulanan : 0;
       document.getElementById('berlakuDari').value = draft.berlakuDari || '';
       document.getElementById('berlakuSampai').value = draft.berlakuSampai || '';
       document.getElementById('jangkaWaktu').value = draft.jangkaWaktu || '';
@@ -216,24 +211,42 @@
         return;
       }
 
+      const pelangganTerpilih = pelangganList[selectPelanggan.value];
+      const bInst = Number(document.getElementById('biayaInstalasi').value || 0);
+      const bBul = Number(document.getElementById('biayaBulanan').value || 0);
+
+      const satuLayanan = {
+        namaLayanan: document.getElementById('namaLayanan').value.trim(),
+        paket: document.getElementById('paket').value.trim(),
+        lokasi: document.getElementById('lokasi').value.trim(),
+        alamatInstalasi: document.getElementById('alamatInstalasi').value.trim(),
+        lebarPita: document.getElementById('lebarPita').value.trim(),
+        biayaInstalasi: bInst,
+        biayaBulanan: bBul,
+        pic: (pelangganTerpilih && pelangganTerpilih.wakilNama) || '-'
+      };
+
       const step1Data = {
         pelIdx: selectPelanggan.value,
-        pelanggan: pelangganList[selectPelanggan.value],
-        nomorKontrak: document.getElementById('nomorKontrak').value,
-        nomorAmandemen: document.getElementById('nomorAmandemen').value,
+        pelanggan: pelangganTerpilih,
+        nomorKontrak: document.getElementById('nomorKontrak').value.trim(),
+        nomorAmandemen: '-',
         tanggalKontrak: document.getElementById('tanggalKontrak').value,
-        availability: document.getElementById('availability').value,
+        availability: document.getElementById('availability').value.trim(),
         jenisLayanan: document.getElementById('jenisLayanan').value,
-        namaLayanan: document.getElementById('namaLayanan').value,
-        paket: document.getElementById('paket').value,
-        lokasi: document.getElementById('lokasi').value,
-        alamatInstalasi: document.getElementById('alamatInstalasi').value,
-        lebarPita: document.getElementById('lebarPita').value,
-        biayaInstalasi: Number(document.getElementById('biayaInstalasi').value || 0),
-        biayaBulanan: Number(document.getElementById('biayaBulanan').value || 0),
+        daftarLayanan: [satuLayanan],
+        namaLayanan: satuLayanan.namaLayanan,
+        paket: satuLayanan.paket,
+        lokasi: satuLayanan.lokasi,
+        alamatInstalasi: satuLayanan.alamatInstalasi,
+        lebarPita: satuLayanan.lebarPita,
+        biayaInstalasi: bInst,
+        biayaBulanan: bBul,
+        biayaLainnya: 0,
+        deliveryTime: '',
         berlakuDari: document.getElementById('berlakuDari').value,
         berlakuSampai: document.getElementById('berlakuSampai').value,
-        jangkaWaktu: document.getElementById('jangkaWaktu').value
+        jangkaWaktu: document.getElementById('jangkaWaktu').value.trim()
       };
 
       sessionStorage.setItem('kfs_step1_draft', JSON.stringify(step1Data));
