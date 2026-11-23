@@ -26,13 +26,18 @@ function bersihNilai(val) {
   return str === '-' ? '' : str;
 }
 
-function garisTitikWord(teks) {
+function teksBersih(teks, minWidth = '100%') {
   const isi = bersihNilai(teks);
   return `
-    <div style="width:100%; min-height:14px; line-height:14px; font-family:Arial, sans-serif; font-size:8pt; color:#000000;">
-      ${isi ? `<span style="font-weight:normal; color:#000000;">${isi}</span>` : '&nbsp;'}
+    <div style="display:inline-block; width:${minWidth}; min-height:15px; line-height:15px; font-family:Arial, Helvetica, sans-serif; font-size:8.5pt; color:#000000; padding:0 2px; box-sizing:border-box; vertical-align:bottom;">
+      ${isi ? `<span style="color:#000000;">${isi}</span>` : '&nbsp;'}
     </div>
   `;
+}
+
+function teksInlineBersih(teks, minWidth = '110px', align = 'center') {
+  const isi = bersihNilai(teks);
+  return `<span style="display:inline-block; min-width:${minWidth}; text-align:${align}; padding:0 4px; line-height:1.15; font-family:Arial, Helvetica, sans-serif; color:#000000;">${isi || '&nbsp;'}</span>`;
 }
 
 function renderKotakNPWP(npwp) {
@@ -64,7 +69,7 @@ function renderKotakNPWP(npwp) {
     <table style="border-collapse:collapse; display:inline-table; vertical-align:middle;">
       <tr>
         ${slots.map(s => `
-          <td style="border:1px solid #000000 !important; width:14px; height:15px; text-align:center; font-family:Arial, sans-serif; font-size:8pt; font-weight:bold; padding:0; background:#ffffff !important; color:${s.sep ? '#dc2626' : '#000000'};">
+          <td style="border:1px solid #000000 !important; width:15px; height:17px; text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:8.5pt; font-weight:${s.sep ? 'bold' : 'normal'}; padding:0; background:#ffffff !important; color:#000000;">
             ${s.v === ' ' ? '&nbsp;' : s.v}
           </td>
         `).join('')}
@@ -77,26 +82,15 @@ function renderKotakIdPelanggan(idPel) {
   const chars = String(idPel || '').trim().padEnd(11, ' ').slice(0, 11);
   return `<table style="border-collapse:collapse; display:inline-table; vertical-align:middle;"><tr>${
     chars.split('').map(ch =>
-      `<td style="border:1px solid #000000 !important; width:15px; height:16px; text-align:center; font-family:Arial, sans-serif; font-size:8pt; font-weight:bold; padding:0; background:#ffffff !important; color:#000000;">${ch === ' ' ? '&nbsp;' : ch}</td>`
+      `<td style="border:1px solid #000000 !important; width:16px; height:18px; text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:8.5pt; font-weight:normal; padding:0; background:#ffffff !important; color:#000000;">${ch === ' ' ? '&nbsp;' : ch}</td>`
     ).join('')
   }</tr></table>`;
 }
 
 function renderLogoTelkom() {
   return `
-    <div style="display:inline-flex; flex-direction:column; align-items:flex-start; font-family:Arial, sans-serif;">
-      <div style="display:inline-flex; align-items:center; gap:4px;">
-        <div style="text-align:left; line-height:1.0;">
-          <div style="font-weight:bold; font-size:12pt; color:#1f2937; letter-spacing:-0.4px;">Telkom</div>
-          <div style="font-weight:bold; font-size:12pt; color:#1f2937; letter-spacing:-0.4px;">Indonesia</div>
-        </div>
-        <svg width="36" height="34" viewBox="0 0 70 64" fill="none">
-          <path d="M38 11C41 7 45 8 45 13C45 15 44 17 43 18C47 13 52 14 51 19C50 21 48 23 47 24C52 20 57 22 55 27C54 29 51 30 49 31C54 29 58 32 55 36C53 39 48 40 44 39C40 38 37 34 37 28C37 22 36 14 38 11Z" fill="#E11D48"/>
-          <circle cx="31" cy="36" r="14" stroke="#6B7280" stroke-width="5.5" fill="none"/>
-          <path d="M31 22A14 14 0 0 1 45 36" stroke="#E11D48" stroke-width="5.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div style="font-size:6.3pt; font-style:italic; color:#111827; margin-top:2px; letter-spacing:0.1px;">the world in your hand</div>
+    <div style="text-align:right; vertical-align:middle; padding:0;">
+      <img src="../logotelkom-removebg-preview.png" alt="Logo Telkom Indonesia" style="max-height:60px; width:auto; display:inline-block;" />
     </div>
   `;
 }
@@ -107,32 +101,34 @@ function renderKopHalaman(judulKiri, d, isKontrakAwal = false) {
   const nomKontrak = bersihNilai(d.nomorKontrak) || 'K.TEL..../HK.810/........-...../20..';
 
   return `
-    <table style="width:100%; border-collapse:collapse; margin-bottom:5px; font-family:Arial, sans-serif; color:#000000;">
+    <table style="width:100%; border-collapse:collapse; margin-bottom:4px; font-family:Arial, Helvetica, sans-serif; color:#000000;">
       <tr>
-        <td style="width:32%; font-weight:bold; font-size:10.5pt; line-height:1.15; vertical-align:middle; padding:0;">
+        <td style="width:29%; font-weight:bold; font-size:10pt; line-height:1.15; vertical-align:middle; padding:0; text-align:left; text-transform:uppercase;">
           ${judulKiri}
         </td>
-        <td style="width:45%; font-weight:bold; font-size:8.4pt; line-height:1.25; vertical-align:middle; padding:0 4px;">
+        <td style="width:45%; font-weight:bold; font-size:9.5pt; line-height:1.2; vertical-align:middle; padding:0 4px; text-align:left;">
           PERUSAHAAN PERSEROAN (PERSERO)<br>
           PT TELEKOMUNIKASI INDONESIA Tbk
         </td>
-        <td style="width:23%; text-align:right; vertical-align:middle; padding:0;">
+        <td style="width:26%; text-align:right; vertical-align:middle; padding:0;">
           ${renderLogoTelkom()}
         </td>
       </tr>
     </table>
 
-    <table style="width:100%; border-collapse:collapse; margin-bottom:6px; font-family:Arial, sans-serif; font-size:8pt; color:#000000;">
+    <table style="width:100%; border-collapse:collapse; margin-bottom:4px; font-family:Arial, Helvetica, sans-serif; font-size:8.2pt; color:#000000;">
       <tr>
-        <td style="width:18%; padding:1.5px 0; white-space:nowrap;">Nomor ID Pelanggan</td>
-        <td style="width:32%; padding:1.5px 4px;">${renderKotakIdPelanggan(d.pelanggan.idPelanggan)}</td>
-        <td style="width:18%; padding:1.5px 4px; white-space:nowrap;">Nomor Amandemen</td>
-        <td style="width:32%; padding:1.5px 0;">${garisTitikWord(nomAmandemen)}</td>
+        <td style="width:19%; padding:1px 0; white-space:nowrap; vertical-align:middle;">Nomor ID Pelanggan</td>
+        <td style="width:31%; padding:1px 4px; vertical-align:middle;">${renderKotakIdPelanggan(d.pelanggan.idPelanggan)}</td>
+        <td style="width:19%; padding:1px 4px; white-space:nowrap; vertical-align:middle;">Nomor Amandemen</td>
+        <td style="width:31%; padding:1px 0; vertical-align:middle;">${teksBersih(nomAmandemen)}</td>
       </tr>
       <tr>
-        <td colspan="2" style="padding:2px 0;"></td>
-        <td style="padding:2px 4px; white-space:nowrap;">${labelNomorKontrak}</td>
-        <td style="padding:2px 0;"><strong>${nomKontrak}</strong></td>
+        <td colspan="2" style="padding:1px 0;"></td>
+        <td style="padding:1px 4px; white-space:nowrap; vertical-align:middle;">${labelNomorKontrak}</td>
+        <td style="padding:1px 0; vertical-align:middle;">
+          <div style="padding-bottom:1px; font-weight:bold; font-size:8.2pt;">${nomKontrak}</div>
+        </td>
       </tr>
     </table>
   `;
@@ -165,22 +161,22 @@ function generateKFSHTML(d, isExportMode = false) {
 
   const barisLayananUtama = layananList.map((item, i) => `
     <tr>
-      <td style="border:1px solid #000000; padding:2.5px 4px; text-align:center;">${i + 1}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px;">${bersihNilai(item.namaLayanan)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px;">${bersihNilai(item.paket)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px;">${bersihNilai(item.alamatInstalasi)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px;">${bersihNilai(item.pic) || bersihNilai(d.pelA && d.pelA.nama) || bersihNilai(d.pelanggan.wakilNama)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px; text-align:center;">${bersihNilai(item.lebarPita)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px; text-align:right;">${formatRupiah(item.biayaInstalasi)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px; text-align:right;">${formatRupiah(item.biayaBulanan)}</td>
-      <td style="border:1px solid #000000; padding:2.5px 4px;">${bersihNilai(item.lokasi)}</td>
+      <td style="border:1px solid #000000; padding:2px 3px; text-align:center; vertical-align:middle;">${i + 1}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:left; vertical-align:middle;">${bersihNilai(item.namaLayanan)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:left; vertical-align:middle;">${bersihNilai(item.paket)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:left; vertical-align:middle;">${bersihNilai(item.alamatInstalasi)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:left; vertical-align:middle;">${bersihNilai(item.pic) || bersihNilai(d.pelA && d.pelA.nama) || bersihNilai(d.pelanggan.wakilNama)}</td>
+      <td style="border:1px solid #000000; padding:2px 3px; text-align:center; vertical-align:middle;">${bersihNilai(item.lebarPita)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:right; vertical-align:middle;">${formatRupiah(item.biayaInstalasi)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:right; vertical-align:middle;">${formatRupiah(item.biayaBulanan)}</td>
+      <td style="border:1px solid #000000; padding:2px 4px; text-align:left; vertical-align:middle;">${bersihNilai(item.lokasi)}</td>
     </tr>
   `).join('');
 
-  const barisKosongLampiran1 = Math.max(0, 5 - layananList.length);
+  const barisKosongLampiran1 = Math.max(0, 6 - layananList.length);
   let ekstraBarisLampiran1 = '';
   for (let i = 0; i < barisKosongLampiran1; i++) {
-    ekstraBarisLampiran1 += `<tr><td style="border:1px solid #000000; height:19px;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td></tr>`;
+    ekstraBarisLampiran1 += `<tr><td style="border:1px solid #000000; height:16px;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td><td style="border:1px solid #000000;"></td></tr>`;
   }
 
   const tglMulai = formatTanggalIndo(d.berlakuDari) || '';
@@ -190,144 +186,366 @@ function generateKFSHTML(d, isExportMode = false) {
 
   const rawJangka = bersihNilai(d.jangkaWaktu);
   const labelJangkaWaktu = rawJangka
-    ? (/bulan|tahun|hari/i.test(rawJangka) ? rawJangka : `${rawJangka} bulan`)
+    ? (/bulan|tahun|hari/i.test(rawJangka) ? rawJangka : `${rawJangka} Bulan`)
     : '';
 
-  const BLUE_WORD = 'background-color:#cde7fa !important; font-weight:normal; padding:2.5px 6px; margin-top:4px; margin-bottom:2px; font-size:8pt; line-height:1.25; color:#000000; font-family:Arial, sans-serif;';
-  const BLUE_MAIN = 'background-color:#cde7fa !important; font-weight:bold; padding:2.5px 6px; margin-top:5px; margin-bottom:2px; font-size:8.2pt; color:#000000; font-family:Arial, sans-serif;';
-  const BLUE_SUB = 'background-color:#e6f0fa !important; font-weight:bold; padding:2px 6px; margin-top:3px; margin-bottom:2px; font-size:8pt; color:#000000; font-family:Arial, sans-serif;';
-  const CLEAN_DIV = 'min-height:13px; padding-bottom:1px;';
-  const CLEAN_SPAN = 'display:inline-block; padding:0 4px 1px 4px;';
-  const CHK_SPAN = 'display:inline-block; border:1px solid #000000; width:15px; height:14px; text-align:center; line-height:13px; font-size:8.5pt; font-weight:bold; background:#ffffff;';
+  const BLUE_HEADER_BOX = 'background-color:#cde7fa !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; padding:2.5px 5px; margin-top:3px; margin-bottom:1.5px; font-size:7.8pt; line-height:1.2; color:#000000; font-family:Arial, Helvetica, sans-serif; text-align:justify;';
+  const BLUE_SECTION_BAR = 'background-color:#cde7fa !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; font-weight:bold; padding:2px 5px; margin-top:4px; margin-bottom:1.5px; font-size:8pt; color:#000000; font-family:Arial, Helvetica, sans-serif; text-align:left;';
+  const BLUE_SUB_BAR = 'background-color:#e6f2fc !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; font-weight:bold; padding:1.5px 5px; margin-top:2px; margin-bottom:1.5px; font-size:7.8pt; color:#000000; font-family:Arial, Helvetica, sans-serif; text-align:left;';
+  const CHK_BOX = 'display:inline-block; border:1px solid #000000; width:12px; height:11px; text-align:center; line-height:10px; font-size:7.5pt; font-weight:bold; background:#ffffff;';
 
+  // Tinggi dikunci pas 294mm agar halaman terakhir tidak meluber menjadi halaman ke-9 yang kosong
   const PAGE_BASE = isExportMode
-    ? 'background:#ffffff; width:210mm; height:295.5mm; padding:8mm 12mm; margin:0; font-family:Arial, Helvetica, sans-serif; color:#000000; font-size:8pt; line-height:1.25; box-sizing:border-box; overflow:hidden;'
-    : 'background:#ffffff; width:210mm; min-height:296mm; padding:8mm 12mm; margin:0 auto 18px auto; box-shadow:0 4px 16px rgba(0,0,0,0.25); font-family:Arial, Helvetica, sans-serif; color:#000000; font-size:8pt; line-height:1.25; box-sizing:border-box;';
+    ? 'background:#ffffff; width:210mm; height:294mm; max-height:294mm; padding:6mm 10mm; margin:0; font-family:Arial, Helvetica, sans-serif; color:#000000; font-size:7.8pt; line-height:1.2; box-sizing:border-box; overflow:hidden; text-align:justify; page-break-inside:avoid;'
+    : 'background:#ffffff; width:210mm; height:294mm; max-height:294mm; padding:6mm 10mm; margin:0 auto 12px auto; box-shadow:0 4px 16px rgba(0,0,0,0.22); font-family:Arial, Helvetica, sans-serif; color:#000000; font-size:7.8pt; line-height:1.2; box-sizing:border-box; overflow:hidden; text-align:justify;';
 
   return `
-    <div style="font-family:Arial, Helvetica, sans-serif; color:#000000;">
-      <!-- ==================== HALAMAN 1: AMANDEMEN KONTRAK BERLANGGANAN (POIN 1 - 4) ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE}">
+    <div id="kfs-printable-root" style="font-family:Arial, Helvetica, sans-serif; color:#000000; text-align:justify;">
+      <!-- ==================== HALAMAN 1 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE}">
         ${renderKopHalaman('AMANDEMEN<br>KONTRAK<br>BERLANGGANAN', d, true)}
 
-        <!-- POIN 1: TELKOM -->
-        <div style="${BLUE_WORD} text-align:justify;">
-          1. &nbsp;PERUSAHAAN PERSEROAN (PERSERO) PT TELEKOMUNIKASI INDONESIA Tbk (TELKOM)<br>
+        <div style="${BLUE_HEADER_BOX}">
+          <strong>1. &nbsp;PERUSAHAAN PERSEROAN (PERSERO) PT TELEKOMUNIKASI INDONESIA Tbk (TELKOM)</strong><br>
           Suatu perusahaan penyedia jasa dan jaringan telekomunikasi yang dibentuk dan didirikan berdasarkan hukum Republik Indonesia, berkedudukan di Jalan Japati Nomor 1 Bandung, Indonesia 40133.<br>
           Diwakili secara sah oleh :
         </div>
-        <div style="padding: 1px 6px;">
-          <table style="width:100%; border-collapse:collapse; font-size:8pt;">
+        <div style="padding: 1px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.8pt;">
             <tr>
-              <td style="width:130px; padding:1px 0;">Nama</td>
-              <td>${garisTitikWord(d.wakilTelkom && d.wakilTelkom.nama)}</td>
+              <td style="width:120px; padding:1px 0;">Nama</td>
+              <td style="width:10px; padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih(d.wakilTelkom && d.wakilTelkom.nama)}</td>
             </tr>
             <tr>
               <td style="padding:1px 0;">Jabatan</td>
-              <td>${garisTitikWord(d.wakilTelkom && d.wakilTelkom.jabatan)}</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih(d.wakilTelkom && d.wakilTelkom.jabatan)}</td>
             </tr>
             <tr>
               <td style="padding:1px 0;">Unit</td>
-              <td>${garisTitikWord((d.wakilTelkom && d.wakilTelkom.unit) || 'Telda Banyuwangi - Witel Jatim Timur')}</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih((d.wakilTelkom && d.wakilTelkom.unit) || 'Telda Banyuwangi - Witel Jatim Timur')}</td>
             </tr>
           </table>
         </div>
 
-        <!-- POIN 2: PELANGGAN -->
-        <div style="${BLUE_WORD}">
-          2. &nbsp;PELANGGAN<br>
+        <div style="${BLUE_HEADER_BOX}">
+          <strong>2. &nbsp;PELANGGAN</strong><br>
           Identitas Perusahaan/Institusi
         </div>
-        <div style="padding: 1px 6px;">
-          <table style="width:100%; border-collapse:collapse; font-size:8pt;">
+        <div style="padding: 1px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.8pt;">
             <tr>
-              <td style="width:130px; padding:1px 0;">Nama</td>
-              <td>${garisTitikWord(d.pelanggan.perusahaan)}</td>
+              <td style="width:120px; padding:1px 0;">Nama</td>
+              <td style="width:10px; padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelanggan.perusahaan)}</td>
             </tr>
             <tr>
               <td style="padding:1px 0; vertical-align:top;">Alamat</td>
-              <td style="padding:0;">
-                ${garisTitikWord(d.pelanggan.alamat)}
-                <div style="margin-top:2px; text-align:right;">
-                  <div style="display:inline-block; width:280px; text-align:center;">
-                    Kode Pos <span style="display:inline-block; min-width:55px; text-align:left;">${bersihNilai(d.pelanggan.kodePos)}</span>
-                  </div>
+              <td style="padding:1px 0; vertical-align:top;">:</td>
+              <td style="padding:1px 0;">
+                ${teksBersih(d.pelanggan.alamat)}
+                <div style="margin-top:1px; text-align:right;">
+                  Kode Pos &nbsp;${teksInlineBersih(d.pelanggan.kodePos, '70px', 'center')}
                 </div>
               </td>
             </tr>
             <tr>
-              <td style="padding:2.5px 0;">NPWP</td>
-              <td style="padding:2.5px 0; text-align:right;">${renderKotakNPWP(d.pelanggan.npwp)}</td>
+              <td style="padding:1px 0;">NPWP</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0; text-align:right;">${renderKotakNPWP(d.pelanggan.npwp)}</td>
             </tr>
           </table>
         </div>
 
-        <div style="${BLUE_WORD} margin-top:2px;">Diwakili secara sah oleh :</div>
-        <div style="padding: 1px 6px;">
-          <table style="width:100%; border-collapse:collapse; font-size:8pt;">
+        <div style="${BLUE_SUB_BAR}">Diwakili secara sah oleh :</div>
+        <div style="padding: 1px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.8pt;">
             <tr>
-              <td style="width:130px; padding:1px 0;">Nama</td>
-              <td>${garisTitikWord(d.pelanggan.wakilNama)}</td>
+              <td style="width:120px; padding:1px 0;">Nama</td>
+              <td style="width:10px; padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelanggan.wakilNama)}</td>
             </tr>
             <tr>
               <td style="padding:1px 0;">Jabatan</td>
-              <td>${garisTitikWord(d.pelanggan.wakilJabatan)}</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelanggan.wakilJabatan)}</td>
             </tr>
           </table>
         </div>
 
-        <!-- POIN 3: LAYANAN -->
-        <div style="${BLUE_MAIN}">3. &nbsp;LAYANAN</div>
-        <div style="padding: 2px 6px;">
-          <table style="width:100%; border-collapse:collapse; margin-bottom:2px; font-size:8pt;">
+        <div style="${BLUE_SECTION_BAR}">3. &nbsp;LAYANAN</div>
+        <div style="padding: 1px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.8pt;">
             <tr>
-              <td style="width:52%; padding:1.5px 0;">Layanan Connectivity TELKOM</td>
-              <td style="padding:1.5px 0;"><span style="${CHK_SPAN}">${cekConn}</span></td>
+              <td style="width:54%; padding:1px 0;">Layanan Connectivity TELKOM</td>
+              <td style="padding:1px 0;"><span style="${CHK_BOX}">${cekConn}</span></td>
             </tr>
             <tr>
-              <td style="padding:1.5px 0;">Layanan Non-Connectivity TELKOM</td>
-              <td style="padding:1.5px 0;"><span style="${CHK_SPAN}">${cekNonConn}</span></td>
+              <td style="padding:1px 0;">Layanan Non-Connectivity TELKOM</td>
+              <td style="padding:1px 0;"><span style="${CHK_BOX}">${cekNonConn}</span></td>
             </tr>
             <tr>
-              <td style="padding:1.5px 0;">Bundling Layanan Connectivity TELKOM &amp; Solusi</td>
-              <td style="padding:1.5px 0;"><span style="${CHK_SPAN}">${cekBundling}</span></td>
+              <td style="padding:1px 0;">Bundling Layanan Connectivity TELKOM &amp; Solusi</td>
+              <td style="padding:1px 0;"><span style="${CHK_BOX}">${cekBundling}</span></td>
             </tr>
           </table>
         </div>
 
-        <div style="${BLUE_SUB}">Jaminan Layanan</div>
-        <div style="padding: 2px 6px;">
-          Tingkat Availability <span style="display:inline-block; min-width:38px; text-align:center;"><strong>${bersihNilai(d.availability)}</strong></span> %
+        <div style="${BLUE_SUB_BAR}">Jaminan Layanan</div>
+        <div style="padding: 1px 5px; font-size:7.8pt;">
+          Tingkat Availability ${teksInlineBersih(d.availability, '40px', 'center')} %
         </div>
 
-        <div style="padding: 2px 6px; text-align:justify;">
+        <div style="padding: 1px 5px; font-size:7.6pt; text-align:justify;">
           <strong>Mekanisme Pemenuhan CPE</strong><br>
           PELANGGAN harus menyiapkan Customer Premises Equipment (CPE) sesuai dengan spesifikasi yang ditentukan TELKOM sebelum proses integrasi.
         </div>
 
-        <div style="${BLUE_SUB}">Rincian Layanan</div>
-        <table style="width:100%; border-collapse:collapse; margin:2px 0 3px 0; table-layout:fixed; word-wrap:break-word; font-size:7.4pt;">
+        <div style="${BLUE_SUB_BAR}">Rincian Layanan</div>
+        <table style="width:100%; border-collapse:collapse; margin:2px 0; table-layout:fixed; word-wrap:break-word; font-size:7pt;">
           <thead>
             <tr>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:24px;">No</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:13%;">Layanan</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:11%;">Paket</th>
-              <th colspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:28%;">Lokasi</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:10%;">Lebar Pita<br>(Kbps)</th>
-              <th colspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:22%;">Biaya</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center; width:12%;">Keterangan</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:22px; font-weight:bold;">No</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:12%; font-weight:bold;">Layanan</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:11%; font-weight:bold;">Paket</th>
+              <th colspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:29%; font-weight:bold;">Lokasi</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:10%; font-weight:bold;">Lebar Pita<br>(Kbps)</th>
+              <th colspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:22%; font-weight:bold;">Biaya</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:12%; font-weight:bold;">Keterangan</th>
             </tr>
             <tr>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center;">Alamat Instalasi</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center;">PIC</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center;">Instalasi</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2px 3px; text-align:center;">Bulanan</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">Alamat Instalasi</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">PIC</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">Instalasi</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">Bulanan</th>
             </tr>
           </thead>
           <tbody>
             ${barisLayananUtama}
             <tr>
-              <td colspan="6" style="border:1px solid #000000; padding:2px 4px; text-align:center; font-weight:bold;">Jumlah</td>
+              <td colspan="6" style="border:1px solid #000000; padding:2px; text-align:center; font-weight:bold;">Jumlah</td>
+              <td style="border:1px solid #000000; padding:2px; text-align:right; font-weight:bold;">${formatRupiah(totalInstalasi)}</td>
+              <td style="border:1px solid #000000; padding:2px; text-align:right; font-weight:bold;">${formatRupiah(totalBulanan)}</td>
+              <td style="border:1px solid #000000; padding:2px;"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="padding: 0 5px; font-size:7pt; line-height:1.2; text-align:justify;">
+          Apabila kolom rincian layanan di atas tidak cukup, rincian layanan akan diuraikan dalam Lampiran I yang merupakan satu kesatuan serta bagian yang tidak terpisahkan dengan Kontrak Berlangganan ini.<br>
+          PELANGGAN akan diberikan masa uji coba layanan maksimum selama 12 (dua belas) hari kalender terhitung sejak tanggal aktivasi yang dituangkan dalam Berita Acara Siap Operasi (BASO). <span style="font-style:italic;">(layanan temporer tidak diberikan masa uji coba/trial)</span><br>
+          Tanggal efektif dimulainya penagihan biaya-biaya akan ditentukan dalam Berita Acara Siap Operasi (BASO).
+        </div>
+
+        <div style="${BLUE_SECTION_BAR}">4. &nbsp;BIAYA-BIAYA (Rupiah)</div>
+        <div style="padding: 1px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.8pt;">
+            <tr>
+              <td style="width:45%; padding:1px 0;">Biaya Instalasi</td>
+              <td style="width:10px; padding:1px 0;">:</td>
+              <td style="padding:1px 0; text-align:right;">
+                Rp &nbsp;<span style="display:inline-block; min-width:170px; text-align:right; padding-right:4px;">${formatRupiah(totalInstalasi)}</span>,-
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Biaya Langganan Bulanan</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0; text-align:right;">
+                Rp &nbsp;<span style="display:inline-block; min-width:170px; text-align:right; padding-right:4px;">${formatRupiah(totalBulanan)}</span>,-
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Biaya Lainnya (IKG, Biaya Integrasi)</td>
+              <td style="padding:1px 0;">:</td>
+              <td style="padding:1px 0; text-align:right;">
+                Rp &nbsp;<span style="display:inline-block; min-width:170px; text-align:right; padding-right:4px;">${formatRupiah(d.biayaLainnya || 0)}</span>,-
+              </td>
+            </tr>
+          </table>
+          <div style="margin-top:1px; font-size:7.1pt; font-style:italic;">Biaya-biaya tersebut di atas belum termasuk PPN</div>
+        </div>
+      </div>
+
+      <!-- ==================== HALAMAN 2 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE}">
+        <div style="${BLUE_SECTION_BAR} margin-top:0;">5. &nbsp;TATA CARA PEMBAYARAN</div>
+        <div style="padding: 1.5px 5px; font-size:7.6pt; line-height:1.24; text-align:justify;">
+          TELKOM akan mengirim Official Receipt selambat-lambatnya pada tanggal 10 (sepuluh) setiap bulannya ke alamat kontak person PELANGGAN yang dicantumkan dalam Kontrak Berlangganan ini.<br>
+          PELANGGAN harus melakukan pembayaran paling lambat pada tanggal 20 (dua puluh) setiap bulannya (Tanggal Jatuh Tempo) atau sesuai tanggal jatuh tempo yang tercantum di dalam tagihan (invoice) setiap bulannya, dengan cara transfer ke rekening bank TELKOM atau virtual account yang tercantum di dalam tagihan (invoice), kecuali ditentukan lain berdasarkan suatu instrumen tertulis yang diterbitkan oleh TELKOM. Seluruh biaya yang timbul dari dan/atau berhubungan dengan pembayaran tersebut merupakan tanggung jawab PELANGGAN sendiri.
+        </div>
+
+        <div style="${BLUE_SECTION_BAR}">6. &nbsp;JANGKA WAKTU</div>
+        <div style="padding: 1.5px 5px; font-size:7.6pt; line-height:1.24; text-align:justify;">
+          Jangka waktu Kontrak Berlangganan adalah terhitung sejak tanggal mulai jangka waktu delivery Layanan, sampai dengan diselesaikan seluruh hak dan kewajiban TELKOM dan PELANGGAN.<br>
+          Jangka waktu Kontrak Berlangganan terhitung sejak tanggal ${teksInlineBersih(tglMulai, '115px', 'center')} sampai dengan tanggal ${teksInlineBersih(tglSelesai, '115px', 'center')}, dengan rincian sebagai berikut:
+          <table style="width:100%; border-collapse:collapse; margin:2px 0; font-size:7.5pt;">
+            <tr>
+              <td style="width:295px; padding:1px 0;">Jangka waktu delivery &nbsp;<em>Delivery Time</em></td>
+              <td style="width:10px;">:</td>
+              <td style="padding:1px 0;">${teksInlineBersih(d.deliveryTime, '40px', 'center')} hari</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Maksimal sampai dengan tanggal &nbsp;<em>Shall be maximum on date</em></td>
+              <td>:</td>
+              <td style="padding:1px 0;">${teksInlineBersih(tglSelesai, '125px', 'center')}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Jangka waktu Layanan &nbsp;<em>Term of subscribe</em></td>
+              <td>:</td>
+              <td style="padding:1px 0;">${teksInlineBersih(labelJangkaWaktu, '70px', 'center')} berlaku sejak tanggal ${teksInlineBersih(tglMulai, '95px', 'center')} sampai dengan ${teksInlineBersih(tglSelesai, '95px', 'center')}</td>
+            </tr>
+          </table>
+          Jangka waktu tersebut dapat diperpanjang berdasarkan kesepakatan tertulis antara TELKOM dan PELANGGAN. PELANGGAN harus menyampaikan pemberitahuan secara tertulis kepada TELKOM sekurang-kurangnya 30 (tiga puluh) hari sebelum tanggal berakhirnya jangka waktu Kontrak untuk melakukan perpanjangan Layanan berdasarkan Kontrak Berlangganan ini.
+        </div>
+
+        <div style="${BLUE_SECTION_BAR}">7. &nbsp;KONTAK PERSON</div>
+        <div style="${BLUE_SUB_BAR}">TELKOM</div>
+        <div style="padding: 1.5px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.4pt;">
+            <tr>
+              <td style="width:16%; padding:1px 0;">Nama</td>
+              <td style="width:34%; padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.nama)}</td>
+              <td style="width:16%; padding:1px 0;">Nama</td>
+              <td style="width:34%; padding:1px 0;">${teksBersih(d.payroll && d.payroll.nama)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Jabatan</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.jabatan)}</td>
+              <td style="padding:1px 0;">Jabatan</td>
+              <td style="padding:1px 0;">${teksBersih(d.payroll && d.payroll.jabatan)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Telepon/GSM *)</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.gsm)}</td>
+              <td style="padding:1px 0;">Telepon/GSM *)</td>
+              <td style="padding:1px 0;">${teksBersih(d.payroll && d.payroll.gsm)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Telepon Kantor *)</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.kantor)}</td>
+              <td style="padding:1px 0;">Telepon Kantor *)</td>
+              <td style="padding:1px 0;">${teksBersih(d.payroll && d.payroll.kantor)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Faksimil</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.fax)}</td>
+              <td style="padding:1px 0;">Faksimil</td>
+              <td style="padding:1px 0;">${teksBersih(d.payroll && d.payroll.fax)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">E-mail</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.am && d.am.email)}</td>
+              <td style="padding:1px 0;">E-mail</td>
+              <td style="padding:1px 0;">${teksBersih(d.payroll && d.payroll.email)}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="${BLUE_SUB_BAR}">PELANGGAN</div>
+        <div style="padding: 1.5px 5px;">
+          <table style="width:100%; border-collapse:collapse; font-size:7.4pt;">
+            <tr>
+              <td style="width:16%; padding:1px 0;">Nama</td>
+              <td style="width:34%; padding:1px 10px 1px 0;">${teksBersih(d.pelA && d.pelA.nama)}</td>
+              <td style="width:16%; padding:1px 0;">Nama</td>
+              <td style="width:34%; padding:1px 0;">${teksBersih(d.pelB && d.pelB.nama)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Jabatan</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.pelA && d.pelA.jabatan)}</td>
+              <td style="padding:1px 0;">Jabatan</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelB && d.pelB.jabatan)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Telepon/GSM *)</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.pelA && d.pelA.gsm)}</td>
+              <td style="padding:1px 0;">Telepon/GSM *)</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelB && d.pelB.gsm)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Telepon Kantor *)</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih((d.pelA && d.pelA.kantor) || d.pelanggan.telepon)}</td>
+              <td style="padding:1px 0;">Telepon Kantor *)</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelB && d.pelB.kantor)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">Faksimil</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.pelA && d.pelA.fax)}</td>
+              <td style="padding:1px 0;">Faksimil</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelB && d.pelB.fax)}</td>
+            </tr>
+            <tr>
+              <td style="padding:1px 0;">E-mail</td>
+              <td style="padding:1px 10px 1px 0;">${teksBersih(d.pelA && d.pelA.email)}</td>
+              <td style="padding:1px 0;">E-mail</td>
+              <td style="padding:1px 0;">${teksBersih(d.pelB && d.pelB.email)}</td>
+            </tr>
+          </table>
+          <div style="font-size:6.8pt; margin-top:1px;">*) : wajib diisi</div>
+        </div>
+
+        <div style="${BLUE_SECTION_BAR}">8. &nbsp;LAIN-LAIN</div>
+        <div style="padding: 1.5px 5px; font-size:7.6pt; line-height:1.24; text-align:justify;">
+          Syarat-syarat dan ketentuan-ketentuan yang belum diatur dalam Kontrak Berlangganan ini akan diatur dalam lampiran-lampiran yang merupakan satu bagian yang tidak terpisahkan dengan Kontrak Berlangganan ini.<br>
+          Dengan menandatangani Kontrak Berlangganan ini, kami menyatakan: (i) seluruh data dan informasi yang kami berikan dalam Kontrak Berlangganan adalah lengkap, benar dan akurat; (ii) telah membaca, memahami dan menyetujui untuk tunduk kepada seluruh syarat dan ketentuan Kontrak Berlangganan ini berikut seluruh lampiran dan tambahannya yang merupakan bagian dan satu kesatuan yang tidak terpisahkan dengan Kontrak Berlangganan ini.
+
+          <div style="text-align:right; margin-top:6px;">
+            ${teksInlineBersih(kotaSurat, '105px', 'center')}, ${teksInlineBersih(tglSurat, '125px', 'center')}
+          </div>
+
+          <table style="width:100%; margin-top:4px; text-align:center; border-collapse:collapse; font-size:7.8pt;">
+            <tr>
+              <td style="width:50%; font-weight:bold;">TELKOM</td>
+              <td style="width:50%; font-weight:bold;">PELANGGAN</td>
+            </tr>
+            <tr>
+              <td style="height:42px;"></td>
+              <td style="height:42px;"></td>
+            </tr>
+            <tr>
+              <td style="line-height:1.35;">
+                Nama : ${teksInlineBersih(d.wakilTelkom && d.wakilTelkom.nama, '160px', 'left')}<br>
+                Jabatan : ${teksInlineBersih(d.wakilTelkom && d.wakilTelkom.jabatan, '155px', 'left')}
+              </td>
+              <td style="line-height:1.35;">
+                Nama : ${teksInlineBersih(d.pelanggan.wakilNama, '160px', 'left')}<br>
+                Jabatan : ${teksInlineBersih(d.pelanggan.wakilJabatan, '155px', 'left')}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==================== HALAMAN 3 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE}">
+        ${renderKopHalaman('LAMPIRAN I<br>AMANDEMEN<br>KONTRAK BERLANGGANAN', d, false)}
+
+        <div style="${BLUE_SECTION_BAR} text-align:center; margin-bottom:0;">RINCIAN LAYANAN</div>
+        <table style="width:100%; border-collapse:collapse; margin:0 0 4px 0; table-layout:fixed; word-wrap:break-word; font-size:7.1pt;">
+          <thead>
+            <tr>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:26px; font-weight:bold;">NO</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:12%; font-weight:bold;">LAYANAN</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:11%; font-weight:bold;">PAKET</th>
+              <th colspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:29%; font-weight:bold;">LOKASI</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:10%; font-weight:bold;">LEBAR PITA<br>(Kbps)</th>
+              <th colspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:22%; font-weight:bold;">BIAYA</th>
+              <th rowspan="2" style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; width:12%; font-weight:bold;">KETERANGAN</th>
+            </tr>
+            <tr>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">ALAMAT INSTALASI</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">PIC</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">INSTALASI</th>
+              <th style="border:1px solid #000000; background:#e5e7eb; padding:2px; text-align:center; font-weight:bold;">BULANAN</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${barisLayananUtama}
+            ${ekstraBarisLampiran1}
+            <tr>
+              <td colspan="6" style="border:1px solid #000000; padding:2px 4px; text-align:center; font-weight:bold;">JUMLAH</td>
               <td style="border:1px solid #000000; padding:2px 4px; text-align:right; font-weight:bold;">${formatRupiah(totalInstalasi)}</td>
               <td style="border:1px solid #000000; padding:2px 4px; text-align:right; font-weight:bold;">${formatRupiah(totalBulanan)}</td>
               <td style="border:1px solid #000000; padding:2px 4px;"></td>
@@ -335,244 +553,41 @@ function generateKFSHTML(d, isExportMode = false) {
           </tbody>
         </table>
 
-        <div style="padding: 0 6px; font-size:7.3pt; text-align:justify;">
-          Apabila kolom rincian layanan di atas tidak cukup, rincian layanan akan diuraikan dalam Lampiran I yang merupakan satu kesatuan serta bagian yang tidak terpisahkan dengan Kontrak Berlangganan ini.<br>
-          PELANGGAN akan diberikan masa uji coba layanan maksimum selama 12 (dua belas) hari kalender terhitung sejak tanggal aktivasi yang dituangkan dalam Berita Acara Siap Operasi (BASO). <span style="color:#dc2626; font-style:italic;">(layanan temporer tidak diberikan masa uji coba/trial)</span><br>
-          Tanggal efektif dimulainya penagihan biaya-biaya akan ditentukan dalam Berita Acara Siap Operasi (BASO).
-        </div>
-
-        <!-- POIN 4: BIAYA-BIAYA -->
-        <div style="${BLUE_MAIN}">4. &nbsp;BIAYA-BIAYA (Rupiah)</div>
-        <div style="padding: 1.5px 6px;">
-          <table style="width:100%; border-collapse:collapse; font-size:8pt;">
-            <tr>
-              <td style="width:45%; padding:1.5px 0;">Biaya Instalasi</td>
-              <td style="padding:1.5px 0;">
-                <span style="display:inline-block; min-width:210px; text-align:right; padding-right:6px;">Rp ${formatRupiah(totalInstalasi)}</span>,-
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Biaya Langganan Bulanan</td>
-              <td style="padding:1.5px 0;">
-                <span style="display:inline-block; min-width:210px; text-align:right; padding-right:6px;">Rp ${formatRupiah(totalBulanan)}</span>,-
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Biaya Lainnya (IKG, Biaya Integrasi )</td>
-              <td style="padding:1.5px 0;">
-                <span style="display:inline-block; min-width:210px; text-align:right; padding-right:6px;">Rp ${formatRupiah(d.biayaLainnya || 0)}</span>,-
-              </td>
-            </tr>
-          </table>
-          <div style="margin-top:2px; font-size:7.5pt;">Biaya-biaya tersebut di atas belum termasuk PPN</div>
-        </div>
-      </div>
-
-      <!-- ==================== HALAMAN 2: POIN 5 - 8 & TANDA TANGAN ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE}">
-        <div style="${BLUE_MAIN} margin-top:0;">5. &nbsp;TATA CARA PEMBAYARAN</div>
-        <div style="padding: 2px 4px; text-align:justify;">
-          TELKOM akan mengirim Official Receipt selambat-lambatnya pada tanggal 10 (sepuluh) setiap bulannya ke alamat kontak person PELANGGAN yang dicantumkan dalam Kontrak Berlangganan ini.<br>
-          PELANGGAN harus melakukan pembayaran paling lambat pada tanggal 20 (dua puluh) setiap bulannya (Tanggal Jatuh Tempo) atau sesuai tanggal jatuh tempo yang tercantum di dalam tagihan (invoice) setiap bulannya, dengan cara transfer ke rekening bank TELKOM atau virtual account yang tercantum di dalam tagihan (invoice), kecuali ditentukan lain berdasarkan suatu instrumen tertulis yang diterbitkan oleh TELKOM. Seluruh biaya yang timbul dari dan/atau berhubungan dengan pembayaran tersebut merupakan tanggung jawab PELANGGAN sendiri.
-        </div>
-
-        <div style="${BLUE_MAIN}">6. &nbsp;JANGKA WAKTU</div>
-        <div style="padding: 2px 4px; text-align:justify;">
-          Jangka waktu Kontrak Berlangganan adalah terhitung sejak tanggal mulai jangka waktu delivery Layanan, sampai dengan diselesaikan seluruh hak dan kewajiban TELKOM dan PELANGGAN.<br>
-          Jangka waktu Kontrak Berlangganan terhitung sejak tanggal <span style="${CLEAN_SPAN} min-width:115px; text-align:center;">${tglMulai}</span> sampai dengan tanggal <span style="${CLEAN_SPAN} min-width:115px; text-align:center;">${tglSelesai}</span>, dengan rincian sebagai berikut:
-          <table style="width:100%; border-collapse:collapse; margin:3px 0; font-size:7.8pt;">
-            <tr>
-              <td style="width:310px; padding:1.5px 0;">Jangka waktu delivery &nbsp;<em>Delivery Time</em></td>
-              <td style="padding:1.5px 0;"><span style="${CLEAN_SPAN} min-width:45px; text-align:center;">${bersihNilai(d.deliveryTime)}</span> hari</td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Maksimal sampai dengan tanggal &nbsp;<em>Shall be maximum on date</em></td>
-              <td style="padding:1.5px 0;"><span style="${CLEAN_SPAN} min-width:130px; text-align:center;">${tglSelesai}</span></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Jangka waktu Layanan &nbsp;<em>Term of subscribe</em></td>
-              <td style="padding:1.5px 0;"><span style="${CLEAN_SPAN} min-width:75px; text-align:center;">${labelJangkaWaktu}</span> berlaku sejak tanggal <span style="${CLEAN_SPAN} min-width:105px; text-align:center;">${tglMulai}</span> sampai dengan <span style="${CLEAN_SPAN} min-width:105px; text-align:center;">${tglSelesai}</span></td>
-            </tr>
-          </table>
-          Jangka waktu tersebut dapat diperpanjang berdasarkan kesepakatan tertulis antara TELKOM dan PELANGGAN. PELANGGAN harus menyampaikan pemberitahuan secara tertulis kepada TELKOM sekurang-kurangnya 30 (tiga puluh) hari sebelum tanggal berakhirnya jangka waktu Kontrak untuk melakukan perpanjangan Layanan berdasarkan Kontrak Berlangganan ini.
-        </div>
-
-        <div style="${BLUE_MAIN}">7. &nbsp;KONTAK PERSON</div>
-        <div style="${BLUE_SUB}">TELKOM</div>
-        <div style="padding: 2px 4px;">
-          <table style="width:100%; border-collapse:collapse; font-size:7.7pt;">
-            <tr>
-              <td style="width:17%; padding:1.5px 0;">Nama</td>
-              <td style="width:33%; padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.nama)}</div></td>
-              <td style="width:17%; padding:1.5px 0;">Nama</td>
-              <td style="width:33%; padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.nama)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Jabatan</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.jabatan)}</div></td>
-              <td style="padding:1.5px 0;">Jabatan</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.jabatan)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Telepon/GSM *)</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.gsm)}</div></td>
-              <td style="padding:1.5px 0;">Telepon/GSM *)</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.gsm)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Telepon Kantor *)</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.kantor)}</div></td>
-              <td style="padding:1.5px 0;">Telepon Kantor *)</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.kantor)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Faksimil</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.fax)}</div></td>
-              <td style="padding:1.5px 0;">Faksimil</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.fax)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">E-mail</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.am && d.am.email)}</div></td>
-              <td style="padding:1.5px 0;">E-mail</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.payroll && d.payroll.email)}</div></td>
-            </tr>
-          </table>
-        </div>
-
-        <div style="${BLUE_SUB}">PELANGGAN</div>
-        <div style="padding: 2px 4px;">
-          <table style="width:100%; border-collapse:collapse; font-size:7.7pt;">
-            <tr>
-              <td style="width:17%; padding:1.5px 0;">Nama</td>
-              <td style="width:33%; padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.nama)}</div></td>
-              <td style="width:17%; padding:1.5px 0;">Nama</td>
-              <td style="width:33%; padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.nama)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Jabatan</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.jabatan)}</div></td>
-              <td style="padding:1.5px 0;">Jabatan</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.jabatan)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Telepon/GSM *)</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.gsm)}</div></td>
-              <td style="padding:1.5px 0;">Telepon/GSM *)</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.gsm)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Telepon Kantor *)</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.kantor) || bersihNilai(d.pelanggan.telepon)}</div></td>
-              <td style="padding:1.5px 0;">Telepon Kantor *)</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.kantor)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">Faksimil</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.fax)}</div></td>
-              <td style="padding:1.5px 0;">Faksimil</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.fax)}</div></td>
-            </tr>
-            <tr>
-              <td style="padding:1.5px 0;">E-mail</td>
-              <td style="padding:1.5px 8px 1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelA && d.pelA.email)}</div></td>
-              <td style="padding:1.5px 0;">E-mail</td>
-              <td style="padding:1.5px 0;"><div style="${CLEAN_DIV}">${bersihNilai(d.pelB && d.pelB.email)}</div></td>
-            </tr>
-          </table>
-          <div style="font-size:7.2pt; margin-top:2px;">*) : wajib diisi</div>
-        </div>
-
-        <div style="${BLUE_MAIN}">8. &nbsp;LAIN-LAIN</div>
-        <div style="padding: 2px 4px; text-align:justify;">
-          Syarat-syarat dan ketentuan-ketentuan yang belum diatur dalam Kontrak Berlangganan ini akan diatur dalam lampiran-lampiran yang merupakan satu bagian yang tidak terpisahkan dengan Kontrak Berlangganan ini.<br>
-          Dengan menandatangani Kontrak Berlangganan ini, kami menyatakan: (i) seluruh data dan informasi yang kami berikan dalam Kontrak Berlangganan adalah lengkap, benar dan akurat; (ii) telah membaca, memahami dan menyetujui untuk tunduk kepada seluruh syarat dan ketentuan Kontrak Berlangganan ini berikut seluruh lampiran dan tambahannya yang merupakan bagian dan satu kesatuan yang tidak terpisahkan dengan Kontrak Berlangganan ini.
-
-          <div style="text-align:right; margin-top:12px;">
-            <span style="${CLEAN_SPAN} min-width:110px; text-align:center;">${kotaSurat}</span>, <span style="${CLEAN_SPAN} min-width:125px; text-align:center;">${tglSurat}</span>
-          </div>
-
-          <table style="width:100%; margin-top:8px; text-align:center; border-collapse:collapse; font-size:7.8pt;">
-            <tr>
-              <td style="width:50%; font-weight:bold;">TELKOM</td>
-              <td style="width:50%; font-weight:bold;">PELANGGAN</td>
-            </tr>
-            <tr>
-              <td style="height:58px;"></td>
-              <td style="height:58px;"></td>
-            </tr>
-            <tr>
-              <td>Nama <span style="${CLEAN_SPAN} min-width:165px;"><strong>${bersihNilai(d.wakilTelkom && d.wakilTelkom.nama)}</strong></span><br>Jabatan <span style="${CLEAN_SPAN} min-width:160px;">${bersihNilai(d.wakilTelkom && d.wakilTelkom.jabatan)}</span></td>
-              <td>Nama <span style="${CLEAN_SPAN} min-width:165px;"><strong>${bersihNilai(d.pelanggan.wakilNama)}</strong></span><br>Jabatan <span style="${CLEAN_SPAN} min-width:160px;">${bersihNilai(d.pelanggan.wakilJabatan)}</span></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- ==================== HALAMAN 3: LAMPIRAN I – RINCIAN LAYANAN ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE}">
-        ${renderKopHalaman('LAMPIRAN I<br>AMANDEMEN<br>KONTRAK BERLANGGANAN', d, false)}
-
-        <div style="${BLUE_MAIN} text-align:center; margin-bottom:0;">RINCIAN LAYANAN</div>
-        <table style="width:100%; border-collapse:collapse; margin:0 0 4px 0; table-layout:fixed; word-wrap:break-word; font-size:7.3pt;">
-          <thead>
-            <tr>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:26px;">NO</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:13%;">LAYANAN</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:11%;">PAKET</th>
-              <th colspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:28%;">LOKASI</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:10%;">LEBAR PITA<br>(Kbps)</th>
-              <th colspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:22%;">BIAYA</th>
-              <th rowspan="2" style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center; width:12%;">KETERANGAN</th>
-            </tr>
-            <tr>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center;">ALAMAT INSTALASI</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center;">PIC</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center;">INSTALASI</th>
-              <th style="border:1px solid #000000; background:#f3f4f6; padding:2.5px 4px; text-align:center;">BULANAN</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${barisLayananUtama}
-            ${ekstraBarisLampiran1}
-            <tr>
-              <td colspan="6" style="border:1px solid #000000; padding:2.5px 4px; text-align:center; font-weight:bold;">JUMLAH</td>
-              <td style="border:1px solid #000000; padding:2.5px 4px; text-align:right; font-weight:bold;">${formatRupiah(totalInstalasi)}</td>
-              <td style="border:1px solid #000000; padding:2.5px 4px; text-align:right; font-weight:bold;">${formatRupiah(totalBulanan)}</td>
-              <td style="border:1px solid #000000; padding:2.5px 4px;"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="padding: 4px; text-align:justify; margin-top:6px;">
+        <div style="padding: 2px; font-size:7.6pt; line-height:1.25; text-align:justify;">
           <strong>Keterangan:</strong><br>
           Untuk jenis layanan yang membutuhkan alat atau perangkat disisi PELANGGAN, maka alat atau perangkat tersebut akan tetap merupakan milik TELKOM dan tidak menjadi milik PELANGGAN. Setelah berakhirnya jangka waktu Kontrak, TELKOM akan membongkar <em>(dismantle)</em> alat atau perangkat tersebut. Pelanggan dengan ini menjamin untuk bekerjasama dan memberikan bantuan yang diperlukan secara wajar untuk pembongkaran <em>(dismantling)</em> alat atau perangkat tersebut.
 
-          <table style="width:100%; margin-top:26px; text-align:center; border-collapse:collapse; font-size:7.8pt;">
+          <table style="width:100%; margin-top:12px; text-align:center; border-collapse:collapse; font-size:7.8pt;">
             <tr>
               <td style="width:50%; font-weight:bold;">TELKOM</td>
               <td style="width:50%; font-weight:bold;">PELANGGAN</td>
             </tr>
             <tr>
-              <td style="height:64px;"></td>
-              <td style="height:64px;"></td>
+              <td style="height:45px;"></td>
+              <td style="height:45px;"></td>
             </tr>
             <tr>
-              <td>Nama <span style="${CLEAN_SPAN} min-width:165px;"><strong>${bersihNilai(d.wakilTelkom && d.wakilTelkom.nama)}</strong></span><br>Jabatan <span style="${CLEAN_SPAN} min-width:160px;">${bersihNilai(d.wakilTelkom && d.wakilTelkom.jabatan)}</span></td>
-              <td>Nama <span style="${CLEAN_SPAN} min-width:165px;"><strong>${bersihNilai(d.pelanggan.wakilNama)}</strong></span><br>Jabatan <span style="${CLEAN_SPAN} min-width:160px;">${bersihNilai(d.pelanggan.wakilJabatan)}</span></td>
+              <td style="line-height:1.35;">
+                Nama : ${teksInlineBersih(d.wakilTelkom && d.wakilTelkom.nama, '160px', 'left')}<br>
+                Jabatan : ${teksInlineBersih(d.wakilTelkom && d.wakilTelkom.jabatan, '155px', 'left')}
+              </td>
+              <td style="line-height:1.35;">
+                Nama : ${teksInlineBersih(d.pelanggan.wakilNama, '160px', 'left')}<br>
+                Jabatan : ${teksInlineBersih(d.pelanggan.wakilJabatan, '155px', 'left')}
+              </td>
             </tr>
           </table>
         </div>
       </div>
 
-      <!-- ==================== HALAMAN 4: LAMPIRAN II (PASAL 1 - PASAL 3) ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE} font-size:7.6pt; line-height:1.28;">
+      <!-- ==================== HALAMAN 4 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE} font-size:7.2pt; line-height:1.18;">
         ${renderKopHalaman('LAMPIRAN II<br>AMANDEMEN KONTRAK BERLANGGANAN', d, false)}
 
-        <div style="${BLUE_MAIN} text-align:center; margin-bottom:4px;">SYARAT-SYARAT DAN KETENTUAN-KETENTUAN BERLANGGANAN</div>
+        <div style="${BLUE_SECTION_BAR} text-align:center; margin-bottom:2px;">SYARAT-SYARAT DAN KETENTUAN-KETENTUAN BERLANGGANAN</div>
 
-        <div style="font-weight:bold; text-align:center; margin-top:5px; margin-bottom:2px;">Pasal 1<br>PENGERTIAN</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:1px; margin-bottom:1px;">Pasal 1<br>PENGERTIAN</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Layanan adalah layanan telekomunikasi dari TELKOM yang menyediakan jaringan komunikasi data secara khusus (private) dan internet untuk PELANGGAN sebagaimana disepakati dan tercantum dalam Kontrak Berlangganan dan/atau Lampiran I (Rincian Layanan) Kontrak Berlangganan dan/atau setiap amandemen, perubahan dan/atau tambahannya yang dibuat dari waktu ke waktu.</li>
           <li>Tingkat Availability adalah tingkat ketersediaan jaringan telekomunikasi yang menjamin Layanan berdasarkan Kontrak Berlangganan ini sesuai dengan kualitas teknis yang distandarkan.</li>
           <li>Biaya Instalasi adalah sejumlah biaya yang harus dibayar satu kali oleh PELANGGAN kepada TELKOM pada saat terintegrasikannya Layanan berdasarkan Kontrak Berlangganan ini.</li>
@@ -588,18 +603,18 @@ function generateKFSHTML(d, isExportMode = false) {
           <li>Kontrak Berlangganan adalah Kontrak Berlangganan berikut Lampiran I (Rincian Layanan) dan Lampiran II (Syarat-Syarat dan Ketentuan-Ketentuan Berlangganan) termasuk seluruh amandemen, perubahan dan tambahan beserta seluruh dokumen yang dibuat berdasarkan Kontrak Berlangganan ini dari waktu ke waktu.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:5px; margin-bottom:2px;">Pasal 2<br>RUANG LINGKUP</div>
-        <p style="text-align:justify; margin-bottom:4px;">TELKOM akan menyediakan Layanan kepada PELANGGAN dan PELANGGAN akan menerima serta menggunakan Layanan dari TELKOM berdasarkan syarat-syarat dan ketentuan-ketentuan yang diatur dalam Kontrak Berlangganan.</p>
+        <div style="font-weight:bold; text-align:center; margin-top:1px; margin-bottom:1px;">Pasal 2<br>RUANG LINGKUP</div>
+        <p style="text-align:justify; margin:0 0 2px 0;">TELKOM akan menyediakan Layanan kepada PELANGGAN dan PELANGGAN akan menerima serta menggunakan Layanan dari TELKOM berdasarkan syarat-syarat dan ketentuan-ketentuan yang diatur dalam Kontrak Berlangganan.</p>
 
-        <div style="font-weight:bold; text-align:center; margin-top:5px; margin-bottom:2px;">Pasal 3<br>HAK DAN KEWAJIBAN</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:1px; margin-bottom:1px;">Pasal 3<br>HAK DAN KEWAJIBAN</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Disamping hak yang diatur dalam pasal-pasal lain Kontrak Berlangganan ini, hal-hal berikut menjadi hak TELKOM :
             <br>a. Meminta seluruh dokumen persyaratan sebagaimana ditentukan oleh TELKOM, sesuai dengan bentuk badan usaha Pelanggan yang tercantum dalam Kontrak Berlangganan ini. Telkom berhak memutuskan untuk menerima atau tidak menerima permohonan Layanan dari PELANGGAN berdasarkan penilaiannya sendiri atas kesesuaian dokumen persyaratan tersebut.
             <br>b. Melakukan pemeriksaan penggunaan Layanan.
             <br>c. Membuat dan mengirimkan [tagihan] Biaya Instalasi, Biaya Langgangan Bulanan dan Biaya Lainnya kepada PELANGGAN.
             <br>d. Menerima pembayaran tagihan secara penuh dan tepat waktu serta memungut denda (dalam hal terjadi keterlambatan pembayaran) dari PELANGGAN sebagaimana dimaksud Pasal 4 Lampiran II Kontrak Berlangganan ini.
             <br>e. Mengubah sewaktu-waktu atas pertimbangannya sendiri biaya dan/atau tarif Layanan dengan menyampaikan pemberitahuan tertulis kepada Pelanggan sekurang-kurangnya 1 (satu) bulan sebelum biaya dan/atau tarif baru tersebut diberlakukan.
-            <br>f. Melakukan tindakan isolir dan/atau pemutusan Layanan secara sepihak apabila PELANGGAN terindikasi melakukan aktivitas yang berpotensi mengganggu kualitas Layanan secara nasional dan/atau melakukan tindakan kriminal/melanggar hukum termasuk dan tidak terbatas pada: botnet, penyebaran malware seperti virus, worm, trojan, spam, melakukan hacking, web defacing, menggunakan robot, spider atau automated device, yang dapat mematikan atau membebani sistem dan/atau jaringan telekomunikasi.
+            <br>f. Melakukan tindakan isolir dan/apoptotic pemutusan Layanan secara sepihak apabila PELANGGAN terindikasi melakukan aktivitas yang berpotensi mengganggu kualitas Layanan secara nasional dan/atau melakukan tindakan kriminal/melanggar hukum termasuk dan tidak terbatas pada: botnet, penyebaran malware seperti virus, worm, trojan, spam, melakukan hacking, web defacing, menggunakan robot, spider atau automated device, yang dapat mematikan atau membebani sistem dan/atau jaringan telekomunikasi.
           </li>
           <li>Disamping kewajiban yang diatur dalam pasal-pasal lain Kontrak Berlangganan ini, hal-hal berikut menjadi kewajiban TELKOM :
             <br>a. Menjaga agar Layanan berfungsi dengan baik sesuai dengan SLG yang disepakati oleh para pihak.
@@ -613,9 +628,9 @@ function generateKFSHTML(d, isExportMode = false) {
         </ol>
       </div>
 
-      <!-- ==================== HALAMAN 5: LAMPIRAN II (LANJUTAN PASAL 3 - PASAL 4) ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE} font-size:7.8pt; line-height:1.32;">
-        <ol start="4" style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+      <!-- ==================== HALAMAN 5 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE} font-size:7.25pt; line-height:1.2;">
+        <ol start="4" style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Disamping kewajiban yang diatur dalam pasal lain Kontrak Berlangganan ini, hal-hal berikut menjadi kewajiban PELANGGAN :
             <br>4.1. Membayar tagihan secara penuh dan tepat waktu sebelum atau pada tanggal Tanggal Jatuh Tempo sebagaimana ditentukan dalam Kontrak Berlangganan ini.
             <br>4.2. Menyediakan, memasang, memelihara, dan memperbaiki Instalasi Kabel Gedung (IKG) dan Customer Premises Equipment (CPE) yang sesuai dengan spesifikasi teknis yang ditentukan oleh TELKOM untuk memastikan agar Layanan dapat berfungsi dengan baik.
@@ -629,8 +644,8 @@ function generateKFSHTML(d, isExportMode = false) {
           </li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 4<br>PEMBAYARAN DAN TATA CARA PEMBAYARAN</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 4<br>PEMBAYARAN DAN TATA CARA PEMBAYARAN</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Pelanggan harus membayar Biaya Instalasi bersamaan dengan pembayaran Biaya Langganan Bulanan untuk bulan pertama. Biaya Langganan Bulanan bulan pertama dihitung secara prorata sesuai dengan jumlah hari dimana Pelanggan telah menggunakan Layanan pada bulan tersebut.</li>
           <li>Seluruh pemenuhan kewajiban perpajakan yang timbul dari atau sehubungan dengan tagihan berdasarkan Kontrak Berlangganan ini akan menjadi tanggung jawab masing-masing pihak berdasarkan ketentuan peraturan perundang-undangan perpajakan yang berlaku di Indonesia.</li>
           <li>Dalam hal PELANGGAN melakukan pemotongan PPh Pasal 23, maka PELANGGAN wajib menyerahkan bukti pemotongan PPh Pasal 23 tersebut kepada TELKOM, paling lambat akhir bulan N+1 setelah pembayaran.</li>
@@ -650,12 +665,12 @@ function generateKFSHTML(d, isExportMode = false) {
         </ol>
       </div>
 
-      <!-- ==================== HALAMAN 6: LAMPIRAN II (PASAL 5 - PASAL 8) ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE} font-size:7.9pt; line-height:1.36;">
-        <div style="font-weight:bold; text-align:center; margin-top:0; margin-bottom:2px;">Pasal 5<br>RESTITUSI</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+      <!-- ==================== HALAMAN 6 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE} font-size:7.25pt; line-height:1.2;">
+        <div style="font-weight:bold; text-align:center; margin-top:0; margin-bottom:1px;">Pasal 5<br>RESTITUSI</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Apabila Layanan mengalami gangguan sehingga tidak sesuai dengan tingkat Availability yang disepakati, maka untuk lokasi yang mengalami gangguan, PELANGGAN berhak memperoleh restitusi, dengan perhitungan sebagai berikut :
-            <div style="margin:6px 0 6px 14px;">
+            <div style="margin:2px 0 2px 12px;">
               <strong>Restitusi = [(A-Av) / C] x B</strong><br>
               A &nbsp;&nbsp;= jumlah jam gangguan dalam bulan gangguan<br>
               Av = [(100% - Tingkat Availability) x jumlah jam dalam bulan gangguan]<br>
@@ -668,8 +683,8 @@ function generateKFSHTML(d, isExportMode = false) {
           <li>Restitusi tidak akan diberikan apabila gangguan terjadi diluar ruas Layanan yang menjadi tanggung jawab TELKOM dan/atau akibat gangguan yang bukan merupakan kelalaian atau kesalahan TELKOM.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 6<br>LARANGAN BAGI PELANGGAN</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 6<br>LARANGAN BAGI PELANGGAN</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>PELANGGAN dilarang melakukan pemindahan atau perubahan apapun terhadap Jaringan TELKOM serta melakukan Fraud sehubungan dengan penggunaan Layanan TELKOM.</li>
           <li>PELANGGAN dilarang dengan sengaja dan tanpa hak atau melawan hukum menyalahgunakan Layanan TELKOM dengan cara melakukan akses melalui komputer dan/atau sistem elektronik apapun dengan cara dan dengan tujuan apapun tanpa izin TELKOM.</li>
           <li>PELANGGAN dilarang menggunakan Layanan TELKOM untuk melakukan tindakan yang dapat merugikan pihak manapun, termasuk namun tidak terbatas pada :
@@ -677,21 +692,21 @@ function generateKFSHTML(d, isExportMode = false) {
             <br>b. Menggunakan Perangkat yang tidak secure terhadap terjadinya Fraud;
             <br>c. Pengiriman e-mail secara terus menerus dengan tidak bertanggung jawab (spamming);
             <br>d. Memalsukan e-mail header atau metode lain yang digunakan dengan tujuan untuk memalsukan identitas PELANGGAN;
-            <br>e. Pelanggaran terhadap Hak katas Kekayaan Intelektual (HaKI) pihak lain;
+            <br>e. Pelanggaran terhadap Hak atas Kekayaan Intelektual (HaKI) pihak lain;
             <br>f. Tindakan-tindakan yang melanggar norma-norma kesopanan, kesusilaan, peraturan atau hukum yang berlaku di wilayah Negara Republik Indonesia.
           </li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 7<br>SANKSI-SANKSI</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 7<br>SANKSI-SANKSI</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Pelanggaran yang dilakukan PELANGGAN terhadap ketentuan dalam Kontrak Berlangganan dapat dikenakan sanksi berupa isolir Layanan, termasuk denda keterlambatan, ganti rugi Fraud, dan denda pengakhiran, downgrade, pemutusan/pencabutan Layanan dan/atau blacklist.</li>
           <li>Pengenaan sanksi berdasarkan ketentuan Kontrak Berlangganan tidak mengurangi kewajiban PELANGGAN untuk melunasi seluruh tagihan/tunggakan/denda kepada TELKOM.</li>
           <li>PELANGGAN dengan ini memahami, mengetahui dan menyatakan bahwa ketentuan dalam Kontrak Berlangganan merupakan pemberitahuan/informasi tentang kemungkinan dikenakannya sanksi tersebut, oleh karena itu tidak ada kewajiban bagi TELKOM untuk memberitahukan terlebih dahulu kepada PELANGGAN atas pengenaan sanksi dimaksud.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 8<br>PEMBATASAN TANGGUNG JAWAB TELKOM</div>
-        <p style="text-align:justify; margin-bottom:3px;">TELKOM dibebaskan dari tanggung jawab atas pembayaran kompensasi atau kerugian yang ditanggung oleh PELANGGAN, baik kerugian langsung ataupun tidak langsung sebagai akibat dari berfungsinya atau tidak berfungsinya sambungan Layanan TELKOM, karena :</p>
-        <ol type="a" style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 8<br>PEMBATASAN TANGGUNG JAWAB TELKOM</div>
+        <p style="text-align:justify; margin:0 0 1px 0;">TELKOM dibebaskan dari tanggung jawab atas pembayaran kompensasi atau kerugian yang ditanggung oleh PELANGGAN, baik kerugian langsung ataupun tidak langsung sebagai akibat dari berfungsinya atau tidak berfungsinya sambungan Layanan TELKOM, karena :</p>
+        <ol type="a" style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Kerusakan atau gangguan Layanan TELKOM akibat kesalahan atau kelalaian PELANGGAN;</li>
           <li>Perubahan Jaringan TELKOM, perubahan nomor, atau jaringan telekomunikasi TELKOM yang bukan disebabkan oleh kesalahan atau kelalaian TELKOM;</li>
           <li>Kegagalan interkoneksi Jaringan dengan penyelenggara telekomunikasi lain;</li>
@@ -700,17 +715,17 @@ function generateKFSHTML(d, isExportMode = false) {
         </ol>
       </div>
 
-      <!-- ==================== HALAMAN 7: LAMPIRAN II (PASAL 9 - PASAL 12) ==================== -->
-      <div class="kfs-page-break" style="${PAGE_BASE} font-size:7.9pt; line-height:1.4;">
-        <div style="font-weight:bold; text-align:center; margin-top:0; margin-bottom:2px;">Pasal 9<br>KEADAAN KAHAR</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+      <!-- ==================== HALAMAN 7 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE} font-size:7.25pt; line-height:1.2;">
+        <div style="font-weight:bold; text-align:center; margin-top:0; margin-bottom:1px;">Pasal 9<br>KEADAAN KAHAR</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Keadaan kahar adalah keadaan-keadaan diluar kekuasaan salah satu atau para pihak yang mengakibatkan pihak dimaksud tidak dapat melaksanakan kewajibannya berdasarkan Kontrak Berlangganan ini. Keadaaan kahar meliputi gempa bumi, angin taufan, banjir besar, kebakaran besar, tanah longsor, wabah penyakit, dan pemogokan umum, huru-hara, perang, sabotase, pemberontakan, kerusakan jaringan akibat perbuatan pihak ketiga, putus aliran listrik umum/PLN diluar kemampuan Para Pihak untuk mengatasinya, kebijakan pemerintah dan hal-hal lain sejenis yang berada diluar kekuasaan atau kemampuan para pihak.</li>
           <li>Dalam hal terjadi keadaan kahar sebagaimana dimaksud ayat (1) Pasal ini, maka pihak yang mengalami keadaan kahar harus memberitahukan secara tertulis mengenai terjadinya keadaan kahar tersebut kepada Pihak lainnya paling lambat 14 (empat belas) hari kalender sejak saat terjadinya keadaan kahar tersebut.</li>
           <li>Semua kerugian dan biaya salah satu pihak atau para pihak yang timbul akibat peristiwa keadaan kahar tidak menjadi tanggung-jawab pihak lainnya.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 10<br>PEMUTUSAN KONTRAK</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 10<br>PEMUTUSAN KONTRAK</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Apabila pemerintah Republik Indonesia mengundangkan peraturan dan/atau menetapkan kebijakan baru yang mengakibatkan Kontrak Berlangganan ini tidak mungkin dilaksanakan, para pihak dapat mengakhiri Kontrak Berlangganan ini tanpa adanya tuntutan apapun atau beban keuangan atau kewajiban apapun kepada pihak lainnya.</li>
           <li>TELKOM berhak untuk mengakhiri Kontrak Berlangganan ini secara sepihak tanpa pemberitahuan apapun dengan ketentuan sebagai berikut:
             <br>a. Apabila PELANGGAN tetap tidak melakukan pembayaran dalam jangka waktu yang ditentukan dalam Kontrak atau Amandemen.
@@ -718,30 +733,30 @@ function generateKFSHTML(d, isExportMode = false) {
             <br>c. Setelah TELKOM melakukan pemutusan atau isolir terhadap Layanan.
           </li>
           <li>Apabila pada saat Kontrak Berlangganan ini berakhir atau diakhiri masih terdapat kewajiban yang belum diselesaikan oleh salah satu pihak, maka berakhirnya atau diakhirinya Kontrak Berlangganan ini tidak akan mengakhiri kewajiban-kewajiban pihak tersebut sampai dengan diselesaikannya kewajiban-kewajiban tersebut sesuai dengan ketentuan dalam Kontrak Berlangganan ini.</li>
-          <li>Para Pihak sepakat untuk menyampingkan berlakunya ketentuan Pasal 1266 Kitab Undang-Undang Hukum Perdata Indonesia terhadap Kontrak Berlangganan ini, sehingga pemutusan Layanan dan/atau pengakhiran Kontrak Berlangganan ini dapat dilakukan tanpa perlu terlebih dahulu menunggu keputusan pengadilan.</li>
+          <li>Para Pihak sepakat untuk menyampingkan berlakunya ketentuan Pasal 1266 Kitab Undang-Undang Hukum Perdata Indonesia terhadap Kontrak Berlangganan ini, sehingga pemutusan Layanan dan/och pengakhiran Kontrak Berlangganan ini dapat dilakukan tanpa perlu terlebih dahulu menunggu keputusan pengadilan.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 11<br>PENYELESAIAN PERSELISIHAN</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
-          <li>Apabila terjadi perbedaan pendapat atau perselisihan dalam pelaksanaan dan/output penafsiran Kontrak Berlangganan ini, sejauh mungkin Para Pihak akan menyelesaikan melalui musyawarah.</li>
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 11<br>PENYELESAIAN PERSELISIHAN</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
+          <li>Apabila terjadi perbedaan pendapat atau perselisihan dalam pelaksanaan dan/atau penafsiran Kontrak Berlangganan ini, sejauh mungkin Para Pihak akan menyelesaikan melalui musyawarah.</li>
           <li>Apabila musyawarah tidak mencapai kesepakatan, maka Para Pihak sepakat untuk menyelesaikannya melalui Pengadilan Negeri Jakarta Barat.</li>
           <li>Selama perselisihan masih dalam proses penyelesaian, maka TELKOM dan PELANGGAN wajib untuk tetap melaksanakan kewajibannya berdasarkan Kontrak Berlangganan ini.</li>
         </ol>
 
-        <div style="font-weight:bold; text-align:center; margin-top:6px; margin-bottom:2px;">Pasal 12<br>PENUTUP</div>
-        <ol style="margin:0 0 4px 16px; padding:0; text-align:justify;">
+        <div style="font-weight:bold; text-align:center; margin-top:2px; margin-bottom:1px;">Pasal 12<br>PENUTUP</div>
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify;">
           <li>Apabila terjadi penambahan, pengurangan atau perubahan Layanan, akan dibuat secara tertulis dalam Amandemen dan merupakan bagian yang tak terpisahkan serta mempunyai kekuatan hukum yang sama dengan Kontrak Berlangganan ini.</li>
           <li>Kontrak Berlangganan ini tunduk pada Hukum Negara Republik Indonesia.</li>
           <li>Dalam melaksanakan Kontrak Berlangganan ini Para Pihak wajib untuk mentaati ketentuan perundang-undangan atau peraturan-peraturan yang dikeluarkan oleh instansi yang berwenang yang berkaitan dengan Kontrak Berlangganan ini.</li>
         </ol>
       </div>
 
-      <!-- ==================== HALAMAN 8: LAMPIRAN III – DOKUMEN PENDUKUNG ==================== -->
-      <div style="${PAGE_BASE}">
+      <!-- ==================== HALAMAN 8 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE}">
         ${renderKopHalaman('LAMPIRAN III<br>AMANDEMEN<br>KONTRAK BERLANGGANAN', d, false)}
 
-        <div style="${BLUE_MAIN} text-align:center;">Dokumen Pendukung</div>
-        <div style="min-height: 620px; padding: 12px 6px;"></div>
+        <div style="${BLUE_SECTION_BAR} text-align:center;">Dokumen Pendukung</div>
+        <div style="height: 300px; max-height: 300px; padding: 4px; overflow: hidden;"></div>
       </div>
     </div>
   `;

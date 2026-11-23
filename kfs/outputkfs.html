@@ -90,7 +90,7 @@
           </div>
         </div>
 
-        <!-- Dokumen KFS yang dirender -->
+        <!-- Dokumen KFS yang dirender dengan ID target yang jelas -->
         <div id="previewZoomContainer" style="transform-origin: top center; transition: transform 0.2s ease;">
           <div id="documentPreviewArea"></div>
         </div>
@@ -101,7 +101,7 @@
   <!-- Area khusus cetak browser -->
   <div id="print-document"></div>
 
-  <script src="pdf-template.js?v=9"></script>
+  <script src="pdf-template.js?v=10"></script>
   <script>
     const user = JSON.parse(localStorage.getItem('kfs_user'));
     if (!user) {
@@ -198,6 +198,7 @@
     } else {
       const namaPerusahaan = dataKFS.pelanggan.perusahaan || 'Pelanggan';
       document.getElementById('headerDocInfo').textContent = `${dataKFS.nomorKontrak || 'Amandemen KFS'} — ${namaPerusahaan}`;
+      // Render dokumen menggunakan mode tampilan normal di layar
       document.getElementById('documentPreviewArea').innerHTML = generateKFSHTML(dataKFS, false);
     }
 
@@ -211,6 +212,7 @@
       document.getElementById('previewZoomContainer').style.transform = 'scale(1)';
     }
 
+    // FUNGSI CETAK PDF YANG DIPERBAIKI (Mengambil langsung elemen DOM yang sedang tampil)
     async function unduhPDFOtomatis() {
       if (!dataKFS || !dataKFS.pelanggan) {
         alert('Data Form KFS dan Form KFS 2 belum tersedia.');
@@ -222,25 +224,21 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Menyiapkan PDF...';
 
-      let tempHost = null;
       try {
         const rawNama = (dataKFS.pelanggan.perusahaan || 'Pelanggan').trim();
         const safeNama = rawNama.replace(/[^a-zA-Z0-9\s_-]/g, '').replace(/\s+/g, '_');
         const namaFilePDF = `Amandemen_KFS_${safeNama}.pdf`;
 
-        tempHost = document.createElement('div');
-        tempHost.style.position = 'fixed';
-        tempHost.style.left = '0';
-        tempHost.style.top = '0';
-        tempHost.style.width = '210mm';
-        tempHost.style.background = '#ffffff';
-        tempHost.style.zIndex = '99999';
-        tempHost.style.opacity = '0.01';
-        tempHost.style.pointerEvents = 'none';
-        tempHost.innerHTML = generateKFSHTML(dataKFS, true);
-        document.body.appendChild(tempHost);
+        // Ambil elemen yang sudah sukses tampil di layar
+        const elementTarget = document.getElementById('documentPreviewArea');
+        if (!elementTarget) {
+          throw new Error('Elemen dokumen tidak ditemukan di layar.');
+        }
 
-        await new Promise(resolve => setTimeout(resolve, 250));
+        // Kembalikan sementara skala zoom ke 1 agar hasil tangkapan kanvas pas
+        const zoomContainer = document.getElementById('previewZoomContainer');
+        const oldTransform = zoomContainer.style.transform;
+        zoomContainer.style.transform = 'scale(1)';
 
         const opsiPDF = {
           margin: 0,
@@ -250,10 +248,7 @@
             scale: 2,
             useCORS: true,
             letterRendering: true,
-            scrollX: 0,
-            scrollY: 0,
-            x: 0,
-            y: 0
+            logging: false
           },
           jsPDF: {
             unit: 'mm',
@@ -266,15 +261,15 @@
           }
         };
 
-        await html2pdf().set(opsiPDF).from(tempHost).save();
+        await html2pdf().set(opsiPDF).from(elementTarget).save();
+
+        // Kembalikan posisi zoom semula
+        zoomContainer.style.transform = oldTransform;
       } catch (err) {
         console.error('Gagal membuat PDF otomatis:', err);
-        alert('Terjadi kendala saat membuat file PDF otomatis. Membuka dialog cetak browser sebagai alternatif.');
+        alert('Terjadi kendala saat membuat file PDF. Membuka dialog cetak browser sebagai alternatif.');
         cetakViaBrowser();
       } finally {
-        if (tempHost && tempHost.parentNode) {
-          tempHost.parentNode.removeChild(tempHost);
-        }
         btn.disabled = false;
         btn.innerHTML = teksAsli;
       }
