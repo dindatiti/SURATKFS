@@ -58,11 +58,13 @@
         <p class="small fw-semibold mb-3">Lengkapi detail pihak dan layanan dari template kontrak.</p>
 
         <form id="kfsStep1Form">
-          <!-- Pilih Pelanggan -->
+          <!-- Pilih Pelanggan (Menggunakan input list agar bisa dicari) -->
           <div class="bg-white rounded-3 p-3 mb-4">
             <label class="form-label small fw-bold">Pilih Pelanggan *</label>
-            <select id="pilihPelanggan" class="form-select border-0 bg-card-gray fw-bold small" required></select>
-            <div class="small fw-semibold mt-2" style="font-size:11px;">Data identitas dan wakil akandiambil dari profil pelanggan.</div>
+            <input class="form-control border-0 bg-card-gray fw-bold small" list-data list="datalistPelanggan" id="pilihPelanggan" placeholder="Ketik atau pilih nama perusahaan..." required autocomplete="off">
+            <datalist id="datalistPelanggan"></datalist>
+            <input type="hidden" id="pilihPelangganIdx" value="">
+            <div class="small fw-semibold mt-2" style="font-size:11px;">Data identitas dan wakil akan diambil dari profil pelanggan.</div>
           </div>
 
           <!-- Informasi Kontrak -->
@@ -89,8 +91,13 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Tinggal Availability</label>
+              <label class="form-label small fw-bold">Tingkat Availability</label>
               <input type="text" id="availability" class="form-control border-0 rounded-3" value="99.5">
+            </div>
+            <!-- Tambahan input Delivery Time yang sebelumnya terlewat -->
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">Jangka Waktu Delivery (Hari)</label>
+              <input type="number" id="deliveryTime" class="form-control border-0 rounded-3" placeholder="Contoh : 14" value="14">
             </div>
           </div>
 
@@ -118,7 +125,7 @@
               <input type="number" id="lebarPita" class="form-control border-0 rounded-3" value="10000">
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Biaya Instalasi(Rp)</label>
+              <label class="form-label small fw-bold">Biaya Instalasi (Rp)</label>
               <input type="number" id="biayaInstalasi" class="form-control border-0 rounded-3" min="0" value="0">
             </div>
             <div class="col-md-6">
@@ -145,6 +152,7 @@
               <label class="form-label small fw-bold">Jangka Waktu</label>
               <input type="text" id="jangkaWaktu" class="form-control border-0 rounded-3" placeholder="Contoh : 1 Bulan" required>
             </div>
+          
           </div>
 
           <div class="d-flex justify-content-end">
@@ -170,23 +178,49 @@
     document.getElementById('navPelangganCount').textContent = pelangganList.length;
     document.getElementById('navSuratCount').textContent = suratList.length;
 
-    const selectPelanggan = document.getElementById('pilihPelanggan');
+    const inputPelanggan = document.getElementById('pilihPelanggan');
+    const inputPelangganIdx = document.getElementById('pilihPelangganIdx');
+    const datalistPelanggan = document.getElementById('datalistPelanggan');
+
     if (pelangganList.length === 0) {
-      selectPelanggan.innerHTML = `<option value="">-- Belum ada pelanggan (Tambah pelanggan dulu) --</option>`;
+      inputPelanggan.placeholder = '-- Belum ada pelanggan (Tambah pelanggan dulu) --';
+      inputPelanggan.disabled = true;
     } else {
-      selectPelanggan.innerHTML = pelangganList.map((p, idx) =>
-        `<option value="${idx}">${p.perusahaan.toUpperCase()}</option>`
+      // Mengisi datalist untuk fitur pencarian
+      datalistPelanggan.innerHTML = pelangganList.map((p, idx) =>
+        `<option value="${p.perusahaan.toUpperCase()}" data-idx="${idx}"></option>`
       ).join('');
+
       const params = new URLSearchParams(window.location.search);
       if (params.has('pelangganIdx')) {
-        selectPelanggan.value = params.get('pelangganIdx');
+        const idx = params.get('pelangganIdx');
+        if (pelangganList[idx]) {
+          inputPelanggan.value = pelangganList[idx].perusahaan.toUpperCase();
+          inputPelangganIdx.value = idx;
+        }
       }
     }
+
+    // Validasi saat user mengetik/memilih dari datalist pencarian
+    inputPelanggan.addEventListener('input', function() {
+      const val = this.value;
+      const options = datalistPelanggan.options;
+      inputPelangganIdx.value = ''; // Reset dulu
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].value === val) {
+          inputPelangganIdx.value = options[i].getAttribute('data-idx');
+          break;
+        }
+      }
+    });
 
     // Muat draft jika user kembali dari Langkah 2
     const draft = JSON.parse(sessionStorage.getItem('kfs_step1_draft'));
     if (draft) {
-      selectPelanggan.value = draft.pelIdx;
+      inputPelangganIdx.value = draft.pelIdx;
+      if (pelangganList[draft.pelIdx]) {
+        inputPelanggan.value = pelangganList[draft.pelIdx].perusahaan.toUpperCase();
+      }
       document.getElementById('nomorKontrak').value = draft.nomorKontrak || '';
       document.getElementById('tanggalKontrak').value = draft.tanggalKontrak || '';
       document.getElementById('jenisLayanan').value = draft.jenisLayanan || 'Layanan Connectivity TELKOM';
@@ -201,6 +235,7 @@
       document.getElementById('berlakuDari').value = draft.berlakuDari || '';
       document.getElementById('berlakuSampai').value = draft.berlakuSampai || '';
       document.getElementById('jangkaWaktu').value = draft.jangkaWaktu || '';
+      document.getElementById('deliveryTime').value = draft.deliveryTime || '';
     }
 
     document.getElementById('kfsStep1Form').addEventListener('submit', function(e) {
@@ -211,7 +246,14 @@
         return;
       }
 
-      const pelangganTerpilih = pelangganList[selectPelanggan.value];
+      const selectedIdx = inputPelangganIdx.value;
+      if (selectedIdx === '') {
+        alert('Silakan pilih pelanggan yang valid dari daftar yang tersedia!');
+        inputPelanggan.focus();
+        return;
+      }
+
+      const pelangganTerpilih = pelangganList[selectedIdx];
       const bInst = Number(document.getElementById('biayaInstalasi').value || 0);
       const bBul = Number(document.getElementById('biayaBulanan').value || 0);
 
@@ -227,7 +269,7 @@
       };
 
       const step1Data = {
-        pelIdx: selectPelanggan.value,
+        pelIdx: selectedIdx,
         pelanggan: pelangganTerpilih,
         nomorKontrak: document.getElementById('nomorKontrak').value.trim(),
         nomorAmandemen: '-',
@@ -243,7 +285,7 @@
         biayaInstalasi: bInst,
         biayaBulanan: bBul,
         biayaLainnya: 0,
-        deliveryTime: '',
+        deliveryTime: document.getElementById('deliveryTime').value.trim(),
         berlakuDari: document.getElementById('berlakuDari').value,
         berlakuSampai: document.getElementById('berlakuSampai').value,
         jangkaWaktu: document.getElementById('jangkaWaktu').value.trim()
