@@ -644,7 +644,7 @@ function generateKFSHTML(d, isExportMode = false) {
                   <tr>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Jabatan</td>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">:</td>
-                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanTelkom}</td>
+                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; border-bottom:1px solid #000000; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanTelkom}</td>
                   </tr>
                 </table>
               </td>
@@ -658,7 +658,7 @@ function generateKFSHTML(d, isExportMode = false) {
                   <tr>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Jabatan</td>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">:</td>
-                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanPelanggan}</td>
+                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; border-bottom:1px solid #000000; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanPelanggan}</td>
                   </tr>
                 </table>
               </td>
@@ -728,7 +728,7 @@ function generateKFSHTML(d, isExportMode = false) {
                   <tr>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Jabatan</td>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">:</td>
-                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanTelkom}</td>
+                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; border-bottom:1px solid #000000; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanTelkom}</td>
                   </tr>
                 </table>
               </td>
@@ -742,7 +742,7 @@ function generateKFSHTML(d, isExportMode = false) {
                   <tr>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Jabatan</td>
                     <td style="vertical-align:top; padding:2px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">:</td>
-                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanPelanggan}</td>
+                    <td style="vertical-align:top; padding:2px 0; font-weight:normal; border-bottom:1px solid #000000; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">${jabatanPelanggan}</td>
                   </tr>
                 </table>
               </td>
@@ -842,7 +842,11 @@ function generateKFSHTML(d, isExportMode = false) {
           </li>
         </ol>
 
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 4<br>PEMBAYARAN DAN TATA CARA PEMBAYARAN</div>
+
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pelanggan harus membayar Biaya Instalasi bersamaan dengan pembayaran Biaya Langganan Bulanan untuk bulan pertama. Biaya Langganan Bulanan bulan pertama dihitung secara prorata sesuai dengan jumlah hari dimana Pelanggan telah menggunakan Layanan pada bulan tersebut.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Seluruh pemenuhan kewajiban perpajakan yang timbul dari atau sehubungan dengan tagihan berdasarkan Kontrak Berlangganan ini akan menjadi tanggung jawab masing-masing pihak berdasarkan ketentuan peraturan perundang-undangan perpajakan yang berlaku di Indonesia.</li>
@@ -861,27 +865,63 @@ function generateKFSHTML(d, isExportMode = false) {
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">TELKOM dapat menyerahkan proses penagihan pembayaran atas Layanan yang telah digunakan PELANGGAN kepada Pihak lain, apabila PELANGGAN tidak beritikad baik untuk menyelesaikan kewajiban pembayaran atas Layanan.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Dalam hal PELANGGAN memutuskan Layanan berdasarkan Kontrak Berlangganan ini secara sepihak dan/atau mengundurkan diri sebelum berakhirnya jangka waktu Kontrak, maka PELANGGAN wajib membayar denda 30% (tiga puluh perseratus) dari Biaya Langganan Bulanan dikalikan jumlah sisa jangka waktu Kontrak yang belum dijalani sampai dengan berakhirnya jangka waktu Kontrak tersebut.</li>
         </ol>
+
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
+        <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 5<br>RESTITUSI</div>
+        
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
+        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
+          <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">
+            Apabila Layanan mengalami gangguan sehingga tidak sesuai dengan tingkat Availability yang disepakati, maka untuk lokasi yang mengalami gangguan, PELANGGAN berhak memperoleh restitusi, dengan perhitungan sebagai berikut :
+            
+            <div style="text-align:center; font-weight:bold; margin:6px 0 6px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">
+              Restitusi = [(A-Av) / C] x B
+            </div>
+
+            <table style="width:100%; border-collapse:collapse; margin-left:14px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">
+              <tr>
+                <td style="width:20px; padding:1px 0; vertical-align:top;">A</td>
+                <td style="width:10px; padding:1px 0; vertical-align:top;">=</td>
+                <td style="padding:1px 0; vertical-align:top; text-align:left;">jumlah jam gangguan dalam bulan gangguan</td>
+              </tr>
+              <tr>
+                <td style="padding:1px 0; vertical-align:top;">Av</td>
+                <td style="width:10px; padding:1px 0; vertical-align:top;">=</td>
+                <td style="padding:1px 0; vertical-align:top; text-align:left;">[(100% - Tingkat Availability) x jumlah jam dalam bulan gangguan]</td>
+              </tr>
+              <tr>
+                <td style="padding:1px 0; vertical-align:top;">B</td>
+                <td style="width:10px; padding:1px 0; vertical-align:top;">=</td>
+                <td style="padding:1px 0; vertical-align:top; text-align:left;">Biaya Langganan Bulanan</td>
+              </tr>
+              <tr>
+                <td style="padding:1px 0; vertical-align:top;">C</td>
+                <td style="width:10px; padding:1px 0; vertical-align:top;">=</td>
+                <td style="padding:1px 0; vertical-align:top; text-align:left;">jumlah jam dalam bulan gangguan</td>
+              </tr>
+            </table>
+          </li>
+        </ol>
       </div>
 
       <!-- ==================== HALAMAN 6 ==================== -->
       <div class="kfs-page" style="${PAGE_BASE} font-size:8pt; line-height:1.2; text-align:justify; font-family:Arial, Helvetica, sans-serif;">
-        <div style="font-weight:normal; text-align:center; margin-top:0; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 5<br>RESTITUSI</div>
-        <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
-          <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila Layanan mengalami gangguan sehingga tidak sesuai dengan tingkat Availability yang disepakati, maka untuk lokasi yang mengalami gangguan, PELANGGAN berhak memperoleh restitusi, dengan perhitungan sebagai berikut :
-            <div style="margin:2px 0 2px 12px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">
-              <strong>Restitusi = [(A-Av) / C] x B</strong><br>
-              A &nbsp;&nbsp;= jumlah jam gangguan dalam bulan gangguan<br>
-              Av = [(100% - Tingkat Availability) x jumlah jam dalam bulan gangguan]<br>
-              B &nbsp;&nbsp;= Biaya Langganan Bulanan<br>
-              C &nbsp;&nbsp;= jumlah jam dalam bulan gangguan
-            </div>
-          </li>
-          <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Permintaan restitusi dimaksud pada ayat ini, dapat diajukan oleh PELANGGAN, sebanyak-banyaknya adalah sebesar 0,05% dari Biaya Langganan Bulanan.</li>
+        <div style="height:36px; line-height:36px; font-size:10pt;">&nbsp;</div>
+
+        <ol start="2" style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
+          <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif; margin-top:2px;">Permintaan restitusi dimaksud pada ayat ini, dapat diajukan oleh PELANGGAN, sebanyak-banyaknya adalah sebesar 0,05% dari Biaya Langganan Bulanan.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">TELKOM akan memberitahukan jumlah restitusi secara tertulis kepada PELANGGAN bersamaan dengan penyampaian tagihan. Restitusi akan secara otomatis akan mengurangi jumlah total tagihan bulan tersebut.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Restitusi tidak akan diberikan apabila gangguan terjadi diluar ruas Layanan yang menjadi tanggung jawab TELKOM dan/atau akibat gangguan yang bukan merupakan kelalaian atau kesalahan TELKOM.</li>
         </ol>
 
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 6<br>LARANGAN BAGI PELANGGAN</div>
+        
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+        
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">PELANGGAN dilarang melakukan pemindahan atau perubahan apapun terhadap Jaringan TELKOM serta melakukan Fraud sehubungan dengan penggunaan Layanan TELKOM.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">PELANGGAN dilarang dengan sengaja dan tanpa hak atau melawan hukum menyalahgunakan Layanan TELKOM dengan cara melakukan akses melalui komputer dan/atau sistem elektronik apapun dengan cara dan dengan tujuan apapun tanpa izin TELKOM.</li>
@@ -896,13 +936,20 @@ function generateKFSHTML(d, isExportMode = false) {
         </ol>
 
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 7<br>SANKSI-SANKSI</div>
+
+
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pelanggaran yang dilakukan PELANGGAN terhadap ketentuan dalam Kontrak Berlangganan dapat dikenakan sanksi berupa isolir Layanan, termasuk denda keterlambatan, ganti rugi Fraud, dan denda pengakhiran, downgrade, pemutusan/pencabutan Layanan dan/atau blacklist.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pengenaan sanksi berdasarkan ketentuan Kontrak Berlangganan tidak mengurangi kewajiban PELANGGAN untuk melunasi seluruh tagihan/tunggakan/denda kepada TELKOM.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">PELANGGAN dengan ini memahami, mengetahui dan menyatakan bahwa ketentuan dalam Kontrak Berlangganan merupakan pemberitahuan/informasi tentang kemungkinan dikenakannya sanksi tersebut, oleh karena itu tidak ada kewajiban bagi TELKOM untuk memberitahukan terlebih dahulu kepada PELANGGAN atas pengenaan sanksi dimaksud.</li>
         </ol>
 
-        <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 8<br>PEMBATASAN TANGGUNG JAWAB TELKOM</div>
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
+        <div style="font-weight:normal; text-align:center; margin-top:0; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 8<br>PEMBATASAN TANGGUNG JAWAB TELKOM</div>
+
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <p style="text-align:justify; margin:0 0 1px 0; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">TELKOM dibebaskan dari tanggung jawab atas pembayaran kompensasi atau kerugian yang ditanggung oleh PELANGGAN, baik kerugian langsung ataupun tidak langsung sebagai akibat dari berfungsinya atau tidak berfungsinya sambungan Layanan TELKOM, karena :</p>
         <ol type="a" style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Kerusakan atau gangguan Layanan TELKOM akibat kesalahan atau kelalaian PELANGGAN;</li>
@@ -911,18 +958,23 @@ function generateKFSHTML(d, isExportMode = false) {
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Kesalahan tagihan akibat dari akses/pemakaian Layanan yang disediakan oleh penyelenggara jasa telekomunikasi lain di luar TELKOM;</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Kerusakan akibat peristiwa/kejadian diluar batas kendali normal TELKOM (Keadaan Kahar).</li>
         </ol>
-      </div>
 
-      <!-- ==================== HALAMAN 7 ==================== -->
-      <div class="kfs-page" style="${PAGE_BASE} font-size:8pt; line-height:1.2; text-align:justify; font-family:Arial, Helvetica, sans-serif;">
-        <div style="font-weight:normal; text-align:center; margin-top:0; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 9<br>KEADAAN KAHAR</div>
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
+        <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 9<br>KEADAAN KAHAR</div>
+
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Keadaan kahar adalah keadaan-keadaan diluar kekuasaan salah satu atau para pihak yang mengakibatkan pihak dimaksud tidak dapat melaksanakan kewajibannya berdasarkan Kontrak Berlangganan ini. Keadaaan kahar meliputi gempa bumi, angin taufan, banjir besar, kebakaran besar, tanah longsor, wabah penyakit, dan pemogokan umum, huru-hara, perang, sabotase, pemberontakan, kerusakan jaringan akibat perbuatan pihak ketiga, putus aliran listrik umum/PLN diluar kemampuan Para Pihak untuk mengatasinya, kebijakan pemerintah dan hal-hal lain sejenis yang berada diluar kekuasaan atau kemampuan para pihak.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Dalam hal terjadi keadaan kahar sebagaimana dimaksud ayat (1) Pasal ini, maka pihak yang mengalami keadaan kahar harus memberitahukan secara tertulis mengenai terjadinya keadaan kahar tersebut kepada Pihak lainnya paling lambat 14 (empat belas) hari kalender sejak saat terjadinya keadaan kahar tersebut.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Semua kerugian dan biaya salah satu pihak atau para pihak yang timbul akibat peristiwa keadaan kahar tidak menjadi tanggung-jawab pihak lainnya.</li>
         </ol>
 
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 10<br>PEMUTUSAN KONTRAK</div>
+
+          <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila pemerintah Republik Indonesia mengundangkan peraturan dan/atau menetapkan kebijakan baru yang mengakibatkan Kontrak Berlangganan ini tidak mungkin dilaksanakan, para pihak dapat mengakhiri Kontrak Berlangganan ini tanpa adanya tuntutan apapun atau beban keuangan atau kewajiban apapun kepada pihak lainnya.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">TELKOM berhak untuk mengakhiri Kontrak Berlangganan ini secara sepihak tanpa pemberitahuan apapun dengan ketentuan sebagai berikut:
@@ -931,17 +983,35 @@ function generateKFSHTML(d, isExportMode = false) {
             <br>c. Setelah TELKOM melakukan pemutusan atau isolir terhadap Layanan.
           </li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila pada saat Kontrak Berlangganan ini berakhir atau diakhiri masih terdapat kewajiban yang belum diselesaikan oleh salah satu pihak, maka berakhirnya atau diakhirinya Kontrak Berlangganan ini tidak akan mengakhiri kewajiban-kewajiban pihak tersebut sampai dengan diselesaikannya kewajiban-kewajiban tersebut sesuai dengan ketentuan dalam Kontrak Berlangganan ini.</li>
-          <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Para Pihak sepakat untuk menyampingkan berlakunya ketentuan Pasal 1266 Kitab Undang-Undang Hukum Perdata Indonesia terhadap Kontrak Berlangganan ini, sehingga pemutusan Layanan dan/atau pengakhiran Kontrak Berlangganan ini dapat dilakukan tanpa perlu terlebih dahulu menunggu keputusan pengadilan.</li>
         </ol>
+      </div>
+
+      <!-- ==================== HALAMAN 7 ==================== -->
+      <div class="kfs-page" style="${PAGE_BASE} font-size:8pt; line-height:1.2; text-align:justify; font-family:Arial, Helvetica, sans-serif;">
+        <div style="height:36px; line-height:36px; font-size:10pt;">&nbsp;</div>
+
+        <div style="font-weight:normal; text-align:center; margin-top:0; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">
+          <ol start="4" style="margin:0 0 10px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
+            <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Para Pihak sepakat untuk menyampingkan berlakunya ketentuan Pasal 1266 Kitab Undang-Undang Hukum Perdata Indonesia terhadap Kontrak Berlangganan ini, sehingga pemutusan Layanan dan/atau pengakhiran Kontrak Berlangganan ini dapat dilakukan tanpa perlu terlebih dahulu menunggu keputusan pengadilan.</li>
+          </ol>
+        </div>
+
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
 
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 11<br>PENYELESAIAN PERSELISIHAN</div>
+
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila terjadi perbedaan pendapat atau perselisihan dalam pelaksanaan dan/atau penafsiran Kontrak Berlangganan ini, sejauh mungkin Para Pihak akan menyelesaikan melalui musyawarah.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila musyawarah tidak mencapai kesepakatan, maka Para Pihak sepakat untuk menyelesaikannya melalui Pengadilan Negeri Jakarta Barat.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Selama perselisihan masih dalam proses penyelesaian, maka TELKOM dan PELANGGAN wajib untuk tetap melaksanakan kewajibannya berdasarkan Kontrak Berlangganan ini.</li>
         </ol>
 
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
+
         <div style="font-weight:normal; text-align:center; margin-top:2px; margin-bottom:1px; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Pasal 12<br>PENUTUP</div>
+
+        <div style="height:12px; line-height:12px; font-size:9pt;">&nbsp;</div>
         <ol style="margin:0 0 2px 14px; padding:0; z-index:0; text-align:justify; font-family:Arial, Helvetica, sans-serif; font-size:8pt;">
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Apabila terjadi penambahan, pengurangan atau perubahan Layanan, akan dibuat secara tertulis dalam Amandemen dan merupakan bagian yang tak terpisahkan serta mempunyai kekuatan hukum yang sama dengan Kontrak Berlangganan ini.</li>
           <li style="text-align:justify; font-size:8pt; font-family:Arial, Helvetica, sans-serif;">Kontrak Berlangganan ini tunduk pada Hukum Negara Republik Indonesia.</li>
